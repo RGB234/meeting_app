@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:meeting_app/constants/sizes.dart';
+import 'package:meeting_app/screens/login_screen.dart';
+import 'package:meeting_app/screens/signup_screen.dart';
+import 'package:meeting_app/widgets/bottom_navigation_bar.dart';
+import 'package:meeting_app/widgets/sidebar_menu.dart';
+import "../widgets/group_chats.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,78 +14,58 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void onSignUpTap(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
+  }
+
+  void onLoginTap(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "Connection(가제)",
-            style: TextStyle(
-              fontSize: 16,
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 8,
+        title: const Text("{대충계정명}"),
+        actions: [
+          GestureDetector(
+            onTap: () => onLoginTap(context),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Login"),
             ),
           ),
-        ),
-        backgroundColor: const Color.fromRGBO(185, 168, 248, 1),
-        elevation: 8,
-      ),
-      drawer: const NavigationDrawer(),
-      bottomNavigationBar: const GNav(
-        gap: 8,
-        tabs: [
-          GButton(
-            icon: Icons.home,
-            text: "Home",
-          ),
-          GButton(
-            icon: Icons.search,
-            text: "Search",
-          ),
-          GButton(
-            icon: Icons.favorite_outline,
-            text: "Like",
+          GestureDetector(
+            onTap: () => onSignUpTap(context),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Sign in"),
+            ),
           ),
         ],
       ),
-    );
-  }
-}
-
-// 나중에 따로 .dart 로 분리할 예정. sidebar
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: SingleChildScrollView(
+      drawer: const SideBarMenu(),
+      bottomNavigationBar: const BottomNavBar(),
+      body: const SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Sizes.size36,
+            vertical: Sizes.size28,
+          ),
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          buildMenuItems(context),
-        ],
-      )),
+            children: [
+              GroupChats(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-// 나중에 별도 .dart 로 분리할 예정.
-Widget buildMenuItems(BuildContext context) => Column(
-      children: [
-        ListTile(
-          leading: const Icon(Icons.person),
-          title: const Text('내 정보'),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.assignment),
-          title: const Text('기록'),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.settings),
-          title: const Text('환경설정'),
-          onTap: () {},
-        )
-      ],
-    );
+//
+

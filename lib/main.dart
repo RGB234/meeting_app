@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:meeting_app/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MeetingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MeetingApp extends StatelessWidget {
+  const MeetingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorSchemeSeed: const Color(0xb9a8f8),
-        useMaterial3: true,
+        primaryColor: const Color.fromRGBO(185, 168, 248, 1),
       ),
       home: HomeScreen(),
     );
