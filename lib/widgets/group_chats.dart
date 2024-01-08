@@ -13,11 +13,11 @@ class GroupChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: Sizes.size10),
+      padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
+          const Column(
             children: [
               Icon(
                 Icons.ac_unit,
@@ -30,7 +30,7 @@ class GroupChat extends StatelessWidget {
           Gaps.h24,
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: Sizes.size16,
               fontWeight: FontWeight.w400,
             ),

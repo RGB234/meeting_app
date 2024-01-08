@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/screens/login_screen.dart';
-import 'package:meeting_app/screens/signup_screen.dart';
+import 'package:meeting_app/screens/authentication/login_screen.dart';
+import 'package:meeting_app/screens/authentication/signup_screen.dart';
 import 'package:meeting_app/widgets/bottom_navigation_bar.dart';
 import 'package:meeting_app/widgets/sidebar_menu.dart';
 import "../widgets/group_chats.dart";
@@ -14,33 +14,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void onSignUpTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
+  void _onSignUpTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const SignupScreen(),
+    ));
   }
 
-  void onLoginTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  void _onLoginTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const LoginScreen(),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 8,
         title: const Text("{대충계정명}"),
         actions: [
           GestureDetector(
-            onTap: () => onLoginTap(context),
+            onTap: () => _onLoginTap(context),
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("Login"),
             ),
           ),
           GestureDetector(
-            onTap: () => onSignUpTap(context),
+            onTap: () => _onSignUpTap(context),
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("Sign in"),
