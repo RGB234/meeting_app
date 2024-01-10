@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/screens/home_screen.dart';
@@ -11,6 +12,8 @@ class EmailSignUpScreen extends StatefulWidget {
 }
 
 class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   final TextEditingController _usernameFieldController =
       TextEditingController();
   final TextEditingController _emailFieldController = TextEditingController();
@@ -20,6 +23,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
   String _username = "";
   String _email = "";
   String _password = "";
+  bool _isObscure = true;
 
   @override
   void initState() {
@@ -55,10 +59,10 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
     if (_username.isEmpty) return false;
     // no whitespace (for the time being)
     final regExp = RegExp(r"[ㄱ-ㅎㅏ-ㅣ가-힣a-z0-9A-Z]{1,12}");
-    if (!regExp.hasMatch(_username)) {
-      return false;
-    } else {
+    if (regExp.hasMatch(_username)) {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -66,20 +70,20 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
     if (_email.isEmpty) return false;
     final regExp = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return false;
-    } else {
+    if (regExp.hasMatch(_email)) {
       return true;
+    } else {
+      return false;
     }
   }
 
   bool _isPasswordValid() {
     if (_password.isEmpty) return false;
     final regExp = RegExp(r"[\w\d`~!@#$%^&*()\-_=+]{1,16}");
-    if (!regExp.hasMatch(_password)) {
-      return false;
-    } else {
+    if (regExp.hasMatch(_password) && _password.length < 17) {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -89,6 +93,15 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
     } else {
       return false;
     }
+  }
+
+  void _onToggleObscureTap() {
+    _isObscure = !_isObscure;
+    setState(() {});
+  }
+
+  void _onClearTap({required TextEditingController controller}) {
+    controller.clear();
   }
 
   void _onSubmitTap() {
@@ -148,6 +161,20 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   autocorrect: false,
                   controller: _usernameFieldController,
                   decoration: InputDecoration(
+                    suffix: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () => {
+                            _onClearTap(controller: _usernameFieldController)
+                          },
+                          child: const FaIcon(
+                            FontAwesomeIcons.xmark,
+                            size: Sizes.size20,
+                          ),
+                        ),
+                      ],
+                    ),
                     hintText: "사용자 별명 (username)",
                     errorText: _isUsernameValid() ? "" : "한글, 숫자, 영어 조합 12자리",
                   ),
@@ -158,15 +185,52 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   autocorrect: false,
                   controller: _emailFieldController,
                   decoration: InputDecoration(
+                    suffix: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              {_onClearTap(controller: _emailFieldController)},
+                          child: const FaIcon(
+                            FontAwesomeIcons.xmark,
+                            size: Sizes.size20,
+                          ),
+                        ),
+                      ],
+                    ),
                     hintText: "Email",
                     errorText: _isEmailValid() ? "" : "Invalid Email format",
                   ),
                 ),
                 Gaps.v12,
                 TextField(
+                  obscureText: _isObscure,
                   autocorrect: false,
                   controller: _passwordFieldController,
                   decoration: InputDecoration(
+                    suffix: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                            onTap: () => {_onToggleObscureTap()},
+                            child: FaIcon(
+                              _isObscure
+                                  ? FontAwesomeIcons.eyeSlash
+                                  : FontAwesomeIcons.eye,
+                              size: Sizes.size20,
+                            )),
+                        Gaps.h12,
+                        GestureDetector(
+                          onTap: () => {
+                            _onClearTap(controller: _passwordFieldController)
+                          },
+                          child: const FaIcon(
+                            FontAwesomeIcons.xmark,
+                            size: Sizes.size20,
+                          ),
+                        ),
+                      ],
+                    ),
                     hintText: "비밀번호",
                     errorText: _isPasswordValid()
                         ? ""
