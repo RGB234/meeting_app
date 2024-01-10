@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import "package:meeting_app/constants/gaps.dart";
-import 'package:meeting_app/screens/authentication/signup_screen.dart';
-import 'package:meeting_app/widgets/auth_btn.dart';
+import 'package:meeting_app/screens/authentication/signup/signup_screen.dart';
+import 'package:meeting_app/screens/authentication/widgets/auth_btn.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

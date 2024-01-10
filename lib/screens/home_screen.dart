@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/screens/authentication/login_screen.dart';
-import 'package:meeting_app/screens/authentication/signup_screen.dart';
+import 'package:meeting_app/screens/authentication/login/login_screen.dart';
+import 'package:meeting_app/screens/authentication/signup/signup_screen.dart';
 import 'package:meeting_app/widgets/bottom_navigation_bar.dart';
 import 'package:meeting_app/widgets/sidebar_menu.dart';
 import "../widgets/group_chats.dart";
