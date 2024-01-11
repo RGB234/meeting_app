@@ -4,32 +4,19 @@ import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/screens/home_screen.dart';
 
-class EmailSignUpForm extends StatefulWidget {
-  const EmailSignUpForm({super.key});
+class EmailLogInForm extends StatefulWidget {
+  const EmailLogInForm({super.key});
 
   @override
-  State<EmailSignUpForm> createState() => _EmailSignUpFormState();
+  State<EmailLogInForm> createState() => _EmailLogInFormState();
 }
 
-class _EmailSignUpFormState extends State<EmailSignUpForm> {
+class _EmailLogInFormState extends State<EmailLogInForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isObsecure = true;
   Map<String, String> formData = {};
 
-  String? _isUsernameValid({String? value}) {
-    if (value == null) {
-      return null;
-    }
-    final regExp = RegExp(r"[ㄱ-ㅎㅏ-ㅣ가-힣a-z0-9A-Z]{1,12}");
-    if (regExp.hasMatch(value) && value.length < 13) {
-      return null;
-    } else if (value.isEmpty) {
-      return "빈 칸을 채워야 합니다.";
-    } else {
-      return "한글, 알파벳, 숫자 조합. 1~12자리";
-    }
-  }
-
+// ** temporary (start) **
   String? _isEmailValid({String? value}) {
     if (value == null) {
       return null;
@@ -72,6 +59,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
       }
     }
   }
+// ** temporary (end) **
 
   @override
   Widget build(BuildContext context) {
@@ -79,20 +67,6 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
       key: _formkey,
       child: Column(
         children: [
-          TextFormField(
-            validator: (value) => _isUsernameValid(value: value),
-            // memo : newValue is the value it had at the moment the _onSubmit function was executed.
-            onSaved: (newValue) {
-              if (newValue != null) {
-                formData['username'] = newValue;
-              }
-            },
-            autocorrect: false,
-            decoration: const InputDecoration(
-              hintText: "Username",
-            ),
-          ),
-          Gaps.v12,
           TextFormField(
             validator: (value) => _isEmailValid(value: value),
             onSaved: (newValue) {
@@ -150,7 +124,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
             child: GestureDetector(
               onTap: () => _onSubmitTap(),
               child: const Text(
-                "회원가입",
+                "Log In",
                 style: TextStyle(
                   fontSize: Sizes.size12,
                   fontWeight: FontWeight.w300,

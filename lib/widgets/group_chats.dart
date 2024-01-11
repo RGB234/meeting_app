@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:meeting_app/constants/sizes.dart";
 import "package:meeting_app/constants/gaps.dart";
 
+// For now, This is just dummy data.
+
 class GroupChat extends StatelessWidget {
   final String text;
 

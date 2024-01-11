@@ -9,9 +9,11 @@ class SignupScreen extends StatelessWidget {
 
   void _onLoginTap(BuildContext context) {
     Navigator.of(context).pop();
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const LoginScreen(),
-    ));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
   }
 
   @override
