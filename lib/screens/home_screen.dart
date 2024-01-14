@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/screens/authentication/login/login_screen.dart';
 import 'package:meeting_app/screens/authentication/signup/signup_screen.dart';
@@ -16,28 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  List<Widget> screens = [
-    const Column(
-      children: [
-        GroupChats(),
-      ],
-    ),
-    const Column(
-      children: [
-        Text("Chat"),
-      ],
-    ),
-    const Column(
-      children: [
-        Text("Search"),
-      ],
-    ),
-    const Column(
-      children: [
-        Text("Like"),
-      ],
-    ),
-  ];
 
   void _onSwitchIndexTap(int value) {
     setState(() {
@@ -105,13 +84,71 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size36,
-          vertical: Sizes.size28,
-        ),
-        child: screens[_selectedIndex],
-      ),
+      body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size36,
+            vertical: Sizes.size28,
+          ),
+          child: Column(
+            children: [
+              Offstage(
+                offstage: _selectedIndex != 0,
+                child: const Column(
+                  children: [
+                    GroupChats(),
+                  ],
+                ),
+              ),
+              Gaps.v16,
+              Offstage(
+                offstage: _selectedIndex != 1,
+                child: const OffStateTestWidget(
+                  text: "Chat",
+                ),
+              ),
+              Gaps.v16,
+              Offstage(
+                offstage: _selectedIndex != 2,
+                child: const OffStateTestWidget(
+                  text: "Search",
+                ),
+              ),
+              Gaps.v16,
+              Offstage(
+                offstage: _selectedIndex != 3,
+                child: const OffStateTestWidget(
+                  text: "Heart",
+                ),
+              ),
+            ],
+          )),
     );
+  }
+}
+
+// test
+class OffStateTestWidget extends StatefulWidget {
+  final String? text;
+  const OffStateTestWidget({
+    super.key,
+    this.text,
+  });
+
+  @override
+  State<OffStateTestWidget> createState() => _OffStateTestWidgetState();
+}
+
+class _OffStateTestWidgetState extends State<OffStateTestWidget> {
+  int _count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () {
+          setState(() {
+            _count = _count + 1;
+          });
+        },
+        child: Text("${widget.text} - count is $_count"));
   }
 }
