@@ -9,6 +9,7 @@ import 'package:meeting_app/features/home/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/widgets/sidebar_menu.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String routeName = "/";
   const HomeScreen({super.key});
 
   @override
@@ -26,15 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const SignupScreen(),
-    ));
+    Navigator.pushNamed(context, SignupScreen.routeName);
   }
 
   void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const LoginScreen(),
-    ));
+    Navigator.pushNamed(context, LoginScreen.routeName);
   }
 
   @override
@@ -46,15 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
           GestureDetector(
             onTap: () => _onLoginTap(context),
             child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Login"),
+              padding: EdgeInsets.only(right: 18),
+              child: Text("LogIn"),
             ),
           ),
           GestureDetector(
             onTap: () => _onSignUpTap(context),
             child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Sign in"),
+              padding: EdgeInsets.only(right: 24),
+              child: Text("SignUp"),
             ),
           ),
         ],

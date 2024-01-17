@@ -1,4 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:meeting_app/features/authentication/login/email_login_screen.dart';
+import 'package:meeting_app/features/authentication/login/login_screen.dart';
+import 'package:meeting_app/features/authentication/signup/email_signup_screen.dart';
+import 'package:meeting_app/features/authentication/signup/signup_screen.dart';
+import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
@@ -30,7 +35,15 @@ class MeetingApp extends StatelessWidget {
               fontWeight: FontWeight.w300,
             )),
       ),
-      home: const HomeScreen(),
+      initialRoute: HomeScreen.routeName,
+      routes: {
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        EmailLogInScreen.routeName: (context) => const EmailLogInScreen(),
+        SignupScreen.routeName: (context) => const SignupScreen(),
+        EmailSignUpScreen.routeName: (context) => const EmailSignUpScreen(),
+        VideoScreen.routeName: (context) => const VideoScreen(),
+      },
     );
   }
 }

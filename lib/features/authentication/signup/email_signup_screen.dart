@@ -4,6 +4,7 @@ import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/widgets/email_signup_form.dart';
 
 class EmailSignUpScreen extends StatefulWidget {
+  static String routeName = "/signup/email";
   const EmailSignUpScreen({super.key});
 
   @override

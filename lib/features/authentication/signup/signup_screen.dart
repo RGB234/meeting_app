@@ -5,15 +5,12 @@ import 'package:meeting_app/features/authentication/login/login_screen.dart';
 import 'package:meeting_app/features/authentication/widgets/auth_btn.dart';
 
 class SignupScreen extends StatelessWidget {
+  static String routeName = "/signup";
   const SignupScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
     Navigator.of(context).pop();
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+    Navigator.pushNamed(context, LoginScreen.routeName);
   }
 
   @override

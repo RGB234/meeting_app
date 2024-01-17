@@ -36,13 +36,13 @@ class _EmailLogInFormState extends State<EmailLogInForm> {
     if (value == null) {
       return null;
     }
-    final regExp = RegExp(r"[\w\d`~!@#$%^&*()\-_=+]{8,16}");
+    final regExp = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$");
     if (regExp.hasMatch(value) && value.length < 17) {
       return null;
     } else if (value.isEmpty) {
       return "빈 칸을 채워야 합니다.";
     } else {
-      return "최소 8자리 - 최대 16자리. 알파벳, 숫자, 특수문자 조합 가능";
+      return "최소 8자리 - 최대 20자리. 대문자, 소문자, 숫자 각각 최소 1개씩 사용";
     }
   }
 

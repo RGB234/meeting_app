@@ -54,13 +54,9 @@ class AuthBtns extends StatelessWidget {
 
   void _onEmailTap(BuildContext context) {
     if (isSignUp) {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const EmailSignUpScreen()),
-      );
+      Navigator.pushNamed(context, EmailSignUpScreen.routeName);
     } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const EmailLogInScreen()),
-      );
+      Navigator.pushNamed(context, EmailLogInScreen.routeName);
     }
   }
 

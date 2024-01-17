@@ -5,13 +5,12 @@ import 'package:meeting_app/features/authentication/signup/signup_screen.dart';
 import 'package:meeting_app/features/authentication/widgets/auth_btn.dart';
 
 class LoginScreen extends StatelessWidget {
+  static String routeName = "/login";
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
     Navigator.of(context).pop();
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const SignupScreen(),
-    ));
+    Navigator.pushNamed(context, SignupScreen.routeName);
   }
 
   @override
@@ -32,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Gaps.v96,
                 const Text(
-                  "Login",
+                  "LogIn",
                   style: TextStyle(
                     fontSize: Sizes.size28,
                     fontWeight: FontWeight.w300,
