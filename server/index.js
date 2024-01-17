@@ -10,6 +10,7 @@ const DB =
   "mongodb+srv://dbAdmin:9xm0OfULnyOUULg1@chatapp.qvkwosn.mongodb.net/?retryWrites=true&w=majority";
 
 //middleware
+app.use(express.json());
 app.use(authRouter);
 
 //connections

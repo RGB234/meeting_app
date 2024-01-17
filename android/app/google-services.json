@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "148145374031",
+    "project_id": "rgb234-flutter-meeting-app",
+    "storage_bucket": "rgb234-flutter-meeting-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148145374031:android:77cc6e8aed6304314d3b3a",
+        "android_client_info": {
+          "package_name": "com.example.meeting_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSANLYIRqu-nfpXcRtNiTtAGSXDIXC85Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
