@@ -10,6 +10,7 @@ import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/home/home_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

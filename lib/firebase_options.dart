@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,38 +47,28 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBSd--Qwb8V6BxlHBxXjFzy1bzebEBF-go',
-    appId: '1:148145374031:web:ee4f37685183c9dd4d3b3a',
-    messagingSenderId: '148145374031',
-    projectId: 'rgb234-flutter-meeting-app',
-    authDomain: 'rgb234-flutter-meeting-app.firebaseapp.com',
-    storageBucket: 'rgb234-flutter-meeting-app.appspot.com',
-    measurementId: 'G-J4E3ED8NYZ',
+    apiKey: 'AIzaSyAaeD39vxFoq3dF9-xe2s6hP-hIs_8RjmM',
+    appId: '1:789633177672:web:94ca32a4a89301a796e07d',
+    messagingSenderId: '789633177672',
+    projectId: 'rgb234-meeting-app',
+    authDomain: 'rgb234-meeting-app.firebaseapp.com',
+    storageBucket: 'rgb234-meeting-app.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCSANLYIRqu-nfpXcRtNiTtAGSXDIXC85Y',
-    appId: '1:148145374031:android:77cc6e8aed6304314d3b3a',
-    messagingSenderId: '148145374031',
-    projectId: 'rgb234-flutter-meeting-app',
-    storageBucket: 'rgb234-flutter-meeting-app.appspot.com',
+    apiKey: 'AIzaSyBrz5bVNjR0RPybkgT29xlU_6LJmN9-4oU',
+    appId: '1:789633177672:android:970904c2d8b25da796e07d',
+    messagingSenderId: '789633177672',
+    projectId: 'rgb234-meeting-app',
+    storageBucket: 'rgb234-meeting-app.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCqvdLcLOdHAW5gPFt38lS9JUFLiZgA2Kw',
-    appId: '1:148145374031:ios:21c5bc9ae33bc1f34d3b3a',
-    messagingSenderId: '148145374031',
-    projectId: 'rgb234-flutter-meeting-app',
-    storageBucket: 'rgb234-flutter-meeting-app.appspot.com',
+    apiKey: 'AIzaSyAhb7REulDk6IgZx55umuiKD4eHVoqMA4A',
+    appId: '1:789633177672:ios:8ba440ec6878e5b496e07d',
+    messagingSenderId: '789633177672',
+    projectId: 'rgb234-meeting-app',
+    storageBucket: 'rgb234-meeting-app.appspot.com',
     iosBundleId: 'com.example.meetingApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCqvdLcLOdHAW5gPFt38lS9JUFLiZgA2Kw',
-    appId: '1:148145374031:ios:7ceeb6f0624a956e4d3b3a',
-    messagingSenderId: '148145374031',
-    projectId: 'rgb234-flutter-meeting-app',
-    storageBucket: 'rgb234-flutter-meeting-app.appspot.com',
-    iosBundleId: 'com.example.meetingApp.RunnerTests',
   );
 }

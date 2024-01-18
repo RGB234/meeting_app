@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:148145374031:ios:21c5bc9ae33bc1f34d3b3a",
-  "FIREBASE_PROJECT_ID": "rgb234-flutter-meeting-app",
-  "GCM_SENDER_ID": "148145374031"
+  "GOOGLE_APP_ID": "1:789633177672:ios:8ba440ec6878e5b496e07d",
+  "FIREBASE_PROJECT_ID": "rgb234-meeting-app",
+  "GCM_SENDER_ID": "789633177672"
 }
