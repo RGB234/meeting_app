@@ -31,16 +31,21 @@ const userAccountSchema = mongoose.Schema({
     require: true,
     type: String,
     trim: true,
-    validate: {
-      validator: (value) => {
-        // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number
-        const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
-        return value.match(re);
-      },
-      // if not validate
-      message:
-        "Invalid password(8 ~ 20 characters, at least one uppercase letter, one lowercase letter and one number)",
-    },
+    //
+    // password validation process will be done at the client program
+    // or later, i'll try to dealing with hashed password validation
+    //
+    // validate: {
+    //   validator: (value) => {
+    //     // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number
+    //     const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
+    //     return value.match(re);
+    //   },
+    //   // if not validate
+    //   message:
+    //     "Invalid password(8 ~ 20 characters, at least one uppercase letter, one lowercase letter and one number)",
+    // },
+    // minlength: [8, "password can not be less then 8 charaters"],
   },
   type: {
     type: String,

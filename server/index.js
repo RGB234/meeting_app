@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 
 const authRouter = require("./routes/auth");
 
+const mongodbConfig = require("../secret/mongodb_config");
+
 //INIT
 const app = express();
 const PORT = 3000;
-const DB =
-  "mongodb+srv://dbAdmin:9xm0OfULnyOUULg1@chatapp.qvkwosn.mongodb.net/?retryWrites=true&w=majority";
+const DB = mongodbConfig.API_KEY;
 
 //middleware
 app.use(express.json());
