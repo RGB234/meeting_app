@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
@@ -27,11 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.pushNamed(context, SignupScreen.routeName);
+    context.push(SignupScreen.routeName);
+    // Navigator.pushNamed(context, SignupScreen.routeName);
   }
 
   void _onLoginTap(BuildContext context) {
-    Navigator.pushNamed(context, LoginScreen.routeName);
+    context.push(LoginScreen.routeName);
+    // Navigator.pushNamed(context, LoginScreen.routeName);
   }
 
   @override

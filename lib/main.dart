@@ -1,13 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:meeting_app/features/authentication/login/email_login_screen.dart';
-import 'package:meeting_app/features/authentication/login/login_screen.dart';
-import 'package:meeting_app/features/authentication/signup/email_signup_screen.dart';
-import 'package:meeting_app/features/authentication/signup/signup_screen.dart';
-import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
+import 'package:meeting_app/router.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +17,8 @@ class MeetingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -36,15 +32,15 @@ class MeetingApp extends StatelessWidget {
               fontWeight: FontWeight.w300,
             )),
       ),
-      initialRoute: HomeScreen.routeName,
-      routes: {
-        HomeScreen.routeName: (context) => const HomeScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailLogInScreen.routeName: (context) => const EmailLogInScreen(),
-        SignupScreen.routeName: (context) => const SignupScreen(),
-        EmailSignUpScreen.routeName: (context) => const EmailSignUpScreen(),
-        VideoScreen.routeName: (context) => const VideoScreen(),
-      },
+      // initialRoute: HomeScreen.routeName,
+      // routes: {
+      //   HomeScreen.routeName: (context) => const HomeScreen(),
+      //   LoginScreen.routeName: (context) => const LoginScreen(),
+      //   EmailLogInScreen.routeName: (context) => const EmailLogInScreen(),
+      //   SignupScreen.routeName: (context) => const SignupScreen(),
+      //   EmailSignUpScreen.routeName: (context) => const EmailSignUpScreen(),
+      //   VideoScreen.routeName: (context) => const VideoScreen(),
+      // },
     );
   }
 }

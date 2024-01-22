@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import "package:meeting_app/constants/gaps.dart";
 import 'package:meeting_app/features/authentication/signup/signup_screen.dart';
@@ -9,8 +10,10 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
-    Navigator.pushNamed(context, SignupScreen.routeName);
+    context.pop();
+    context.push(SignupScreen.routeName);
+    // Navigator.of(context).pop();
+    // Navigator.pushNamed(context, SignupScreen.routeName);
   }
 
   @override

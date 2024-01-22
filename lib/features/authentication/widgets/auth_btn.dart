@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -54,9 +55,9 @@ class AuthBtns extends StatelessWidget {
 
   void _onEmailTap(BuildContext context) {
     if (isSignUp) {
-      Navigator.pushNamed(context, EmailSignUpScreen.routeName);
+      context.push(EmailSignUpScreen.routeName);
     } else {
-      Navigator.pushNamed(context, EmailLogInScreen.routeName);
+      context.push(EmailLogInScreen.routeName);
     }
   }
 
