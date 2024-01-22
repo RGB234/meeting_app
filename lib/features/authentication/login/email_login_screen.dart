@@ -4,7 +4,8 @@ import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/widgets/email_login_form.dart';
 
 class EmailLogInScreen extends StatefulWidget {
-  static String routeName = "/login/email";
+  static String routePath = "email";
+  static String routeName = "emailLogin";
   const EmailLogInScreen({super.key});
 
   @override

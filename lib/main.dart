@@ -1,14 +1,16 @@
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_app/router.dart';
-import 'firebase_options.dart';
+// import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const MeetingApp());
 }
 
@@ -20,6 +22,7 @@ class MeetingApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
+      title: "Test",
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color.fromARGB(255, 208, 195, 255),
@@ -32,6 +35,7 @@ class MeetingApp extends StatelessWidget {
               fontWeight: FontWeight.w300,
             )),
       ),
+      // Navigator version 1
       // initialRoute: HomeScreen.routeName,
       // routes: {
       //   HomeScreen.routeName: (context) => const HomeScreen(),

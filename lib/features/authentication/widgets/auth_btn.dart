@@ -55,9 +55,9 @@ class AuthBtns extends StatelessWidget {
 
   void _onEmailTap(BuildContext context) {
     if (isSignUp) {
-      context.push(EmailSignUpScreen.routeName);
+      context.pushNamed(EmailSignUpScreen.routeName);
     } else {
-      context.push(EmailLogInScreen.routeName);
+      context.pushNamed(EmailLogInScreen.routeName);
     }
   }
 

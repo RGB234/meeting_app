@@ -9,28 +9,40 @@ import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: HomeScreen.routeName,
+      name: HomeScreen.routeName,
+      path: HomeScreen.routePath,
       builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: LoginScreen.routeName,
-      builder: (context, state) => const LoginScreen(),
-    ),
-    GoRoute(
-      path: EmailLogInScreen.routeName,
-      builder: (context, state) => const EmailLogInScreen(),
-    ),
-    GoRoute(
-      path: SignupScreen.routeName,
-      builder: (context, state) => const SignupScreen(),
-    ),
-    GoRoute(
-      path: EmailSignUpScreen.routeName,
-      builder: (context, state) => const EmailSignUpScreen(),
-    ),
-    GoRoute(
-      path: VideoScreen.routeName,
-      builder: (context, state) => const VideoScreen(),
+      routes: [
+        GoRoute(
+          name: LoginScreen.routeName,
+          path: "login",
+          builder: (context, state) => const LoginScreen(),
+          routes: [
+            GoRoute(
+              name: EmailLogInScreen.routeName,
+              path: "email",
+              builder: (context, state) => const EmailLogInScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          name: SignupScreen.routeName,
+          path: SignupScreen.routePath,
+          builder: (context, state) => const SignupScreen(),
+          routes: [
+            GoRoute(
+              name: EmailSignUpScreen.routeName,
+              path: EmailSignUpScreen.routePath,
+              builder: (context, state) => const EmailSignUpScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          name: VideoScreen.routeName,
+          path: VideoScreen.routePath,
+          builder: (context, state) => const VideoScreen(),
+        ),
+      ],
     ),
   ],
 );

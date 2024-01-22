@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 // import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "package:meeting_app/features/laboratory/videos/video_screen.dart";
 
@@ -23,7 +24,7 @@ Widget buildMenuItems(BuildContext context) => Column(
           leading: const Icon(Icons.science),
           title: const Text('실험실'),
           onTap: () {
-            Navigator.pushNamed(context, VideoScreen.routeName);
+            context.pushNamed(VideoScreen.routeName);
           },
         ),
       ],

@@ -10,7 +10,8 @@ import 'package:meeting_app/features/home/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/widgets/sidebar_menu.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = "/";
+  static String routePath = "/";
+  static String routeName = "home";
   const HomeScreen({super.key});
 
   @override
@@ -28,12 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSignUpTap(BuildContext context) {
-    context.push(SignupScreen.routeName);
+    context.goNamed(SignupScreen.routeName);
     // Navigator.pushNamed(context, SignupScreen.routeName);
   }
 
   void _onLoginTap(BuildContext context) {
-    context.push(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
     // Navigator.pushNamed(context, LoginScreen.routeName);
   }
 

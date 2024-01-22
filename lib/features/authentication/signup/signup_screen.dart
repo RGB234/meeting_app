@@ -6,12 +6,12 @@ import 'package:meeting_app/features/authentication/login/login_screen.dart';
 import 'package:meeting_app/features/authentication/widgets/auth_btn.dart';
 
 class SignupScreen extends StatelessWidget {
-  static String routeName = "/signup";
+  static String routePath = "signup";
+  static String routeName = "signup";
   const SignupScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    context.pop();
-    context.push(LoginScreen.routeName);
+    context.replaceNamed(LoginScreen.routeName);
     // Navigator.of(context).pop();
     // Navigator.pushNamed(context, LoginScreen.routeName);
   }
