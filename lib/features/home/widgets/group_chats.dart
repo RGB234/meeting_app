@@ -1,40 +1,54 @@
 import "package:flutter/material.dart";
-import "package:meeting_app/constants/sizes.dart";
+import "package:go_router/go_router.dart";
 import "package:meeting_app/constants/gaps.dart";
+import "package:meeting_app/features/chat/chat_screen.dart";
 
 // For now, This is just dummy data.
 
-class GroupChat extends StatelessWidget {
+class SingleGroupChat extends StatelessWidget {
   final String text;
 
-  const GroupChat({
+  const SingleGroupChat({
     super.key,
     required this.text,
   });
 
+  void _enterThisRoom(BuildContext context) {
+    context.pushNamed(ChatScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
+    return GestureDetector(
+      onTap: () => _enterThisRoom(context),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Column(
-            children: [
-              Icon(
-                Icons.ac_unit,
-                size: Sizes.size32,
-              ),
-              Gaps.v8,
-              Text("2/4 : 4/4"),
-            ],
+          const CircleAvatar(
+            radius: 26,
+            backgroundImage: NetworkImage(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn5652UtfUdYwTHiiL_2_YtvypxsIxTSiVwg&usqp=CAU"),
           ),
-          Gaps.h24,
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: Sizes.size16,
-              fontWeight: FontWeight.w400,
+          Gaps.h12,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Male : 4/4",
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                Text(
+                  "Female : 2/4",
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                Gaps.v8,
+                Text(text),
+              ],
             ),
           ),
         ],
@@ -50,27 +64,13 @@ class GroupChats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        GroupChat(
-          text: "kfgkajfajfbalfblafa",
-        ),
-        GroupChat(
-          text: "kfgkajfajfbalfblafa",
-        ),
-        GroupChat(
-          text: "kfgkajfajfbalfblafa",
-        ),
-        GroupChat(
-          text: "kfgkajfajfbalfblafa",
-        ),
-        GroupChat(
-          text: "kfgkajfajfbalfblafa",
-        ),
-        GroupChat(
-          text: "kfgkajfajfbalfblafa",
-        ),
-      ],
+    return ListView.separated(
+      itemBuilder: (context, index) => const SingleGroupChat(
+        text: "햄스터랑 지구정복할 사람구해요. 고양이 정중히 사절🙏 자세한 문의 DM 부탁드려요🙏",
+      ),
+      separatorBuilder: (context, index) => Gaps.v32,
+      itemCount: 7,
+      scrollDirection: Axis.vertical,
     );
   }
 }

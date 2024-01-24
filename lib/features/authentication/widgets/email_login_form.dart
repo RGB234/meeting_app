@@ -51,8 +51,7 @@ class _EmailLogInFormState extends State<EmailLogInForm> {
     if (_formkey.currentState != null) {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
-        // ref :
-        context.push(HomeScreen.routeName);
+        context.pushNamed(HomeScreen.routeName);
         // Navigator.of(context).pushAndRemoveUntil(
         //   MaterialPageRoute(
         //     builder: (context) => const HomeScreen(),

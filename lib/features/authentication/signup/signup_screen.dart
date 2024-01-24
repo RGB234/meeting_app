@@ -34,7 +34,7 @@ class SignupScreen extends StatelessWidget {
               children: [
                 Gaps.v96,
                 const Text(
-                  "Sign Up",
+                  "Sign up",
                   style: TextStyle(
                     fontSize: Sizes.size28,
                     fontWeight: FontWeight.w300,
@@ -50,7 +50,7 @@ class SignupScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () => _onLoginTap(context),
                   child: const Text(
-                    "Login",
+                    "Log in",
                     style: TextStyle(
                       color: Colors.red,
                     ),

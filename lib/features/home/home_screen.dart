@@ -42,20 +42,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1.5,
+        shadowColor: Colors.black87,
         title: const Text("{대충계정명}"),
         actions: [
           GestureDetector(
             onTap: () => _onLoginTap(context),
             child: const Padding(
               padding: EdgeInsets.only(right: 18),
-              child: Text("LogIn"),
+              child: Text("Log in"),
             ),
           ),
           GestureDetector(
             onTap: () => _onSignUpTap(context),
             child: const Padding(
               padding: EdgeInsets.only(right: 24),
-              child: Text("SignUp"),
+              child: Text("Sign up"),
             ),
           ),
         ],
@@ -67,63 +69,58 @@ class _HomeScreenState extends State<HomeScreen> {
         gap: 4,
         tabs: const [
           GButton(
-            iconSize: Sizes.size32,
+            iconSize: Sizes.size24,
             icon: Icons.house_outlined,
             text: "Home",
           ),
           GButton(
+            iconSize: Sizes.size20,
             icon: FontAwesomeIcons.comment,
             text: "Chat",
           ),
           GButton(
+            iconSize: Sizes.size20,
             icon: FontAwesomeIcons.magnifyingGlass,
             text: "Search",
           ),
           GButton(
+            iconSize: Sizes.size20,
             icon: FontAwesomeIcons.heart,
             text: "Like",
           ),
         ],
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size36,
-            vertical: Sizes.size28,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Offstage(
-                  offstage: _selectedIndex != 0,
-                  child: const Column(
-                    children: [
-                      GroupChats(),
-                    ],
-                  ),
+          padding: const EdgeInsets.fromLTRB(
+              Sizes.size32, Sizes.size24, Sizes.size32, 0),
+          child: Stack(
+            children: [
+              Offstage(
+                offstage: _selectedIndex != 0,
+                child: const GroupChats(),
+              ),
+              Gaps.v16,
+              Offstage(
+                offstage: _selectedIndex != 1,
+                child: const OffStateTestWidget(
+                  text: "Chat",
                 ),
-                Gaps.v16,
-                Offstage(
-                  offstage: _selectedIndex != 1,
-                  child: const OffStateTestWidget(
-                    text: "Chat",
-                  ),
+              ),
+              Gaps.v16,
+              Offstage(
+                offstage: _selectedIndex != 2,
+                child: const OffStateTestWidget(
+                  text: "Search",
                 ),
-                Gaps.v16,
-                Offstage(
-                  offstage: _selectedIndex != 2,
-                  child: const OffStateTestWidget(
-                    text: "Search",
-                  ),
+              ),
+              Gaps.v16,
+              Offstage(
+                offstage: _selectedIndex != 3,
+                child: const OffStateTestWidget(
+                  text: "Heart",
                 ),
-                Gaps.v16,
-                Offstage(
-                  offstage: _selectedIndex != 3,
-                  child: const OffStateTestWidget(
-                    text: "Heart",
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           )),
     );
   }

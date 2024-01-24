@@ -35,7 +35,7 @@ class _EmailLogInScreenState extends State<EmailLogInScreen> {
               child: Column(children: [
                 Gaps.v60,
                 Text(
-                  "Log In",
+                  "Log in",
                   style: TextStyle(
                     fontSize: Sizes.size28,
                     fontWeight: FontWeight.w300,

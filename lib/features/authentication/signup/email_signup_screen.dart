@@ -35,7 +35,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
               child: Column(children: [
                 Gaps.v60,
                 const Text(
-                  "Sign Up",
+                  "Sign up",
                   style: TextStyle(
                     fontSize: Sizes.size28,
                     fontWeight: FontWeight.w300,
