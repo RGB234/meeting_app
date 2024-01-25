@@ -57,7 +57,7 @@ class _MessageState extends State<Message> {
               const CircleAvatar(
                 radius: Sizes.size20,
                 backgroundImage: NetworkImage(
-                    "https://img.insight.co.kr/static/2017/12/26/700/vbue1730ng950w8yw6oa.jpg"),
+                    "https://media.bunjang.co.kr/images/crop/352154106_w%7Bres%7D.jpg"),
               ),
               Gaps.h12,
               Container(
@@ -65,7 +65,7 @@ class _MessageState extends State<Message> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("깡햄쮜"),
+                    const Text("갱얼쥐"),
                     Gaps.v8,
                     Container(
                       decoration: BoxDecoration(
