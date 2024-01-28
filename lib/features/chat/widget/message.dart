@@ -22,7 +22,7 @@ class _MessageState extends State<Message> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: messageBoxWidth,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -30,8 +30,10 @@ class _MessageState extends State<Message> {
                     const Text("깡햄쮜"),
                     Gaps.v8,
                     Container(
+                      clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.all(Sizes.size10),
@@ -60,7 +62,7 @@ class _MessageState extends State<Message> {
                     "https://media.bunjang.co.kr/images/crop/352154106_w%7Bres%7D.jpg"),
               ),
               Gaps.h12,
-              Container(
+              SizedBox(
                 width: messageBoxWidth,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +70,10 @@ class _MessageState extends State<Message> {
                     const Text("갱얼쥐"),
                     Gaps.v8,
                     Container(
+                      clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.all(Sizes.size10),
