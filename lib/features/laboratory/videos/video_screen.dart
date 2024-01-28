@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meeting_app/features/laboratory/videos/widgets/video_item.dart';
 
 class VideoScreen extends StatefulWidget {
-  static String routePath = "lab/video";
+  static String routePath = "/lab/video";
   static String routeName = "video";
   const VideoScreen({super.key});
 

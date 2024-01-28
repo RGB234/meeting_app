@@ -64,13 +64,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
     if (_formkey.currentState != null) {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
-        context.pushNamed(HomeScreen.routeName);
-        // Navigator.of(context).pushAndRemoveUntil(
-        //   MaterialPageRoute(
-        //     builder: (context) => const HomeScreen(),
-        //   ),
-        //   (route) => false,
-        // );
+        context.goNamed(HomeScreen.routeName, pathParameters: {'tab': "home"});
       }
     }
   }

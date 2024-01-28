@@ -11,9 +11,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    context.replaceNamed(SignupScreen.routeName);
-    // Navigator.of(context).pop();
-    // Navigator.pushNamed(context, SignupScreen.routeName);
+    context.goNamed(SignupScreen.routeName, pathParameters: {'tab': "home"});
   }
 
   @override

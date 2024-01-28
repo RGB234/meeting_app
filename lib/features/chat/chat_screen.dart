@@ -5,9 +5,10 @@ import 'package:meeting_app/features/chat/widget/bottom_textfield.dart';
 import 'package:meeting_app/features/chat/widget/message.dart';
 
 class ChatScreen extends StatefulWidget {
-  static const routeName = "chat";
-  static const routeRoute = "chat";
-  const ChatScreen({super.key});
+  static const routeName = "chatroom";
+  static const routeRoute = "/:chatId";
+  final String chatId;
+  const ChatScreen({super.key, required this.chatId});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();

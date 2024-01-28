@@ -10,32 +10,35 @@ import 'package:meeting_app/features/home/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/widgets/sidebar_menu.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routePath = "/";
+  static String routePath = "/:tab(home|chat|explore|likes)";
   static String routeName = "home";
-  const HomeScreen({super.key});
+  final String tab;
+  const HomeScreen({
+    super.key,
+    required this.tab,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  final List<String> _tabOpt = ["home", "chat", "explore", 'likes'];
+  late int _selectedIndex = _tabOpt.indexOf(widget.tab);
 
   void _onSwitchIndexTap(int value) {
     setState(() {
-      // a value is the index of Tabbed GButton
       _selectedIndex = value;
+      context.go("/${_tabOpt[_selectedIndex]}");
     });
   }
 
   void _onSignUpTap(BuildContext context) {
-    context.goNamed(SignupScreen.routeName);
-    // Navigator.pushNamed(context, SignupScreen.routeName);
+    context.pushNamed(SignupScreen.routeName, pathParameters: {'tab': "home"});
   }
 
   void _onLoginTap(BuildContext context) {
-    context.pushNamed(LoginScreen.routeName);
-    // Navigator.pushNamed(context, LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName, pathParameters: {'tab': "home"});
   }
 
   @override
@@ -81,12 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
           GButton(
             iconSize: Sizes.size20,
             icon: FontAwesomeIcons.magnifyingGlass,
-            text: "Search",
+            text: "Explore",
           ),
           GButton(
             iconSize: Sizes.size20,
             icon: FontAwesomeIcons.heart,
-            text: "Like",
+            text: "Likes",
           ),
         ],
       ),
@@ -97,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Offstage(
                 offstage: _selectedIndex != 0,
-                child: const GroupChats(),
+                child: const OffStateTestWidget(
+                  text: "Home",
+                ),
               ),
               Gaps.v16,
               Offstage(
@@ -109,15 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 2,
-                child: const OffStateTestWidget(
-                  text: "Search",
-                ),
+                child: const GroupChats(),
               ),
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 3,
                 child: const OffStateTestWidget(
-                  text: "Heart",
+                  text: "Likes",
                 ),
               ),
             ],

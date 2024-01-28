@@ -1,4 +1,5 @@
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/router.dart';
 // import 'firebase_options.dart';
@@ -11,7 +12,11 @@ void main() async {
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
   GoRouter.optionURLReflectsImperativeAPIs = true;
-  runApp(const MeetingApp());
+  runApp(
+    const ProviderScope(
+      child: MeetingApp(),
+    ),
+  );
 }
 
 class MeetingApp extends StatelessWidget {

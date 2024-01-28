@@ -7,14 +7,19 @@ import "package:meeting_app/features/chat/chat_screen.dart";
 
 class SingleGroupChat extends StatelessWidget {
   final String text;
+  final String chatId;
 
   const SingleGroupChat({
     super.key,
     required this.text,
+    required this.chatId,
   });
 
   void _enterThisRoom(BuildContext context) {
-    context.pushNamed(ChatScreen.routeName);
+    context.pushNamed(
+      ChatScreen.routeName,
+      pathParameters: {'chatId': chatId},
+    );
   }
 
   @override
@@ -65,8 +70,9 @@ class GroupChats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemBuilder: (context, index) => const SingleGroupChat(
+      itemBuilder: (context, index) => SingleGroupChat(
         text: "햄스터랑 지구정복할 사람구해요. 고양이 정중히 사절🙏 자세한 문의 DM 부탁드려요🙏",
+        chatId: "$index",
       ),
       separatorBuilder: (context, index) => Gaps.v32,
       itemCount: 7,
