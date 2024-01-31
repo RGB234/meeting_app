@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/authentication/screens/login/login_screen.dart';
+import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
 import 'package:meeting_app/features/authentication/widgets/auth_btn.dart';
 
-class SignupScreen extends StatelessWidget {
-  static String routePath = "/signup";
-  static String routeName = "signup";
-  const SignupScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  static String routePath = "/Register";
+  static String routeName = "Register";
+  const RegisterScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
+  void _onSigninTap(BuildContext context) {
     context.goNamed(
-      LoginScreen.routeName,
+      SigninScreen.routeName,
     );
   }
 
@@ -34,7 +34,7 @@ class SignupScreen extends StatelessWidget {
               children: [
                 Gaps.v96,
                 const Text(
-                  "Sign up",
+                  "Register",
                   style: TextStyle(
                     fontSize: Sizes.size28,
                     fontWeight: FontWeight.w300,
@@ -42,15 +42,15 @@ class SignupScreen extends StatelessWidget {
                 ),
                 Gaps.v24,
                 const AuthBtns(
-                  isSignUp: true,
+                  isRegister: true,
                 ),
                 Gaps.v24,
                 const Text("이미 생성한 계정이 있나요?"),
                 Gaps.v8,
                 GestureDetector(
-                  onTap: () => _onLoginTap(context),
+                  onTap: () => _onSigninTap(context),
                   child: const Text(
-                    "Log in",
+                    "Sign in",
                     style: TextStyle(
                       color: Colors.red,
                     ),

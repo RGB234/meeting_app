@@ -1,41 +1,42 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/authentication/screens/login/login_screen.dart';
-import 'package:meeting_app/features/authentication/screens/signup/signup_screen.dart';
+import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
+import 'package:meeting_app/features/authentication/screens/register/register_screen.dart';
 import 'package:meeting_app/features/chat/chat_screen.dart';
 import 'package:meeting_app/features/home/home_screen.dart';
 import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
 
 final routerProvider = Provider((ref) {
+  ref.watch(authState);
   return GoRouter(
     initialLocation: "/explore",
     redirect: (context, state) {
       final location = state.matchedLocation;
-      final isLoggedIn = ref.read(authRepo).isLoggedIn;
-      if (!isLoggedIn) {
+      final isSignedIn = ref.read(authRepo).isSignedIn;
+      if (!isSignedIn) {
         if (location != "/explore") {
-          if (location == LoginScreen.routePath ||
-              location == SignupScreen.routePath) {
+          if (location == SigninScreen.routePath ||
+              location == RegisterScreen.routePath) {
             return null;
           }
-          return LoginScreen.routePath;
+          return SigninScreen.routePath;
         }
       }
       return null;
     },
     routes: [
       GoRoute(
-        name: LoginScreen.routeName,
-        path: LoginScreen.routePath,
+        name: SigninScreen.routeName,
+        path: SigninScreen.routePath,
         builder: (context, state) {
-          return const LoginScreen();
+          return const SigninScreen();
         },
       ),
       GoRoute(
-        name: SignupScreen.routeName,
-        path: SignupScreen.routePath,
-        builder: (context, state) => const SignupScreen(),
+        name: RegisterScreen.routeName,
+        path: RegisterScreen.routePath,
+        builder: (context, state) => const RegisterScreen(),
       ),
       GoRoute(
         name: HomeScreen.routeName,

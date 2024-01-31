@@ -5,14 +5,14 @@ import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/home/home_screen.dart';
 
-class EmailLogInForm extends StatefulWidget {
-  const EmailLogInForm({super.key});
+class EmailSigninForm extends StatefulWidget {
+  const EmailSigninForm({super.key});
 
   @override
-  State<EmailLogInForm> createState() => _EmailLogInFormState();
+  State<EmailSigninForm> createState() => _EmailSigninFormState();
 }
 
-class _EmailLogInFormState extends State<EmailLogInForm> {
+class _EmailSigninFormState extends State<EmailSigninForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isObsecure = true;
   Map<String, String> formData = {};
@@ -130,7 +130,7 @@ class _EmailLogInFormState extends State<EmailLogInForm> {
             child: GestureDetector(
               onTap: () => _onSubmitTap(),
               child: const Text(
-                "Log In",
+                "Sign in",
                 style: TextStyle(
                   fontSize: Sizes.size12,
                   fontWeight: FontWeight.w300,

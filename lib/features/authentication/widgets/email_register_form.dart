@@ -4,17 +4,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/authentication/view_models/signup_view_model.dart';
+import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
 import 'package:meeting_app/features/home/home_screen.dart';
 
-class EmailSignUpForm extends ConsumerStatefulWidget {
-  const EmailSignUpForm({super.key});
+class EmailRegisterForm extends ConsumerStatefulWidget {
+  const EmailRegisterForm({super.key});
 
   @override
-  ConsumerState<EmailSignUpForm> createState() => _EmailSignUpFormState();
+  ConsumerState<EmailRegisterForm> createState() => _EmailRegisterFormState();
 }
 
-class _EmailSignUpFormState extends ConsumerState<EmailSignUpForm> {
+class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isObsecure = true;
   Map<String, String> formData = {};
@@ -66,21 +66,14 @@ class _EmailSignUpFormState extends ConsumerState<EmailSignUpForm> {
     if (_formkey.currentState != null) {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
-        ref.read(signUpForm.notifier).state = {
+        ref.read(registerForm.notifier).state = {
           "email": formData['email'],
           "password": formData['password'],
         };
-        ref.read(signUpProvider.notifier).signUp();
-        _goHomeScreen();
+        // create account, sign in, and then go to initiallocation
+        ref.read(registerProvider.notifier).register();
       }
     }
-  }
-
-  void _goHomeScreen() {
-    context.goNamed(
-      HomeScreen.routeName,
-      pathParameters: {'tab': 'home'},
-    );
   }
 
   @override

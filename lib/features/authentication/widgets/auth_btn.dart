@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meeting_app/features/authentication/screens/login/email_login_screen.dart';
-import 'package:meeting_app/features/authentication/screens/signup/email_signup_screen.dart';
+import 'package:meeting_app/features/authentication/screens/signin/email_signin_screen.dart';
+import 'package:meeting_app/features/authentication/screens/register/email_register_screen.dart';
 
 class AuthBtn extends StatelessWidget {
   final String text;
@@ -46,25 +46,25 @@ class AuthBtn extends StatelessWidget {
 }
 
 class AuthBtns extends StatelessWidget {
-  final bool isSignUp;
+  final bool isRegister;
   const AuthBtns({
     super.key,
-    required this.isSignUp,
+    required this.isRegister,
   });
 
   void _onEmailTap(BuildContext context) {
-    if (isSignUp) {
+    if (isRegister) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const EmailSignUpScreen(),
+          builder: (context) => const EmailRegisterScreen(),
         ),
       );
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const EmailLogInScreen(),
+          builder: (context) => const EmailSigninScreen(),
         ),
       );
     }

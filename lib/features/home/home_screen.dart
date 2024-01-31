@@ -6,8 +6,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/authentication/screens/login/login_screen.dart';
-import 'package:meeting_app/features/authentication/screens/signup/signup_screen.dart';
+import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
+import 'package:meeting_app/features/authentication/screens/register/register_screen.dart';
+import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
 import 'package:meeting_app/features/home/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/widgets/sidebar_menu.dart';
 
@@ -35,36 +36,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     context.go("/${_tabOpt[_selectedIndex]}");
   }
 
-  void _onSignUpTap(BuildContext context) {
-    context.pushNamed(SignupScreen.routeName);
+  void _onRegisterTap(BuildContext context) {
+    context.pushNamed(RegisterScreen.routeName);
   }
 
-  void _onLoginTap(BuildContext context) {
-    context.pushNamed(LoginScreen.routeName);
+  void _onSigninTap(BuildContext context) {
+    context.pushNamed(SigninScreen.routeName);
+  }
+
+  void _onSignOutTap() {
+    ref.read(registerProvider.notifier).signOut();
   }
 
   @override
   Widget build(BuildContext context) {
+    // rebuild when authState is changed.
+    ref.watch(authState);
     return Scaffold(
       appBar: AppBar(
         elevation: 1.5,
         shadowColor: Colors.black87,
         title: const Text("{대충계정명}"),
         actions: [
-          GestureDetector(
-            onTap: () => _onLoginTap(context),
-            child: const Padding(
-              padding: EdgeInsets.only(right: 18),
-              child: Text("Log in"),
-            ),
-          ),
-          GestureDetector(
-            onTap: () => _onSignUpTap(context),
-            child: const Padding(
-              padding: EdgeInsets.only(right: 24),
-              child: Text("Sign up"),
-            ),
-          ),
+          ref.read(registerProvider.notifier).isSignedIn()
+              ? Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => _onSignOutTap(),
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 18),
+                        child: Text("Sign out"),
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => _onSigninTap(context),
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 18),
+                        child: Text("Sign in"),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => _onRegisterTap(context),
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 24),
+                        child: Text("Register"),
+                      ),
+                    ),
+                  ],
+                )
         ],
       ),
       drawer: const SideBarMenu(),
