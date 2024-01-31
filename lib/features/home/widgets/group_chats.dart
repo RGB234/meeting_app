@@ -3,8 +3,6 @@ import "package:go_router/go_router.dart";
 import "package:meeting_app/constants/gaps.dart";
 import "package:meeting_app/features/chat/chat_screen.dart";
 
-// For now, This is just dummy data.
-
 class SingleGroupChat extends StatelessWidget {
   final String text;
   final String chatId;

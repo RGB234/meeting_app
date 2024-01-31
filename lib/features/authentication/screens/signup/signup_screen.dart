@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/authentication/login/login_screen.dart';
+import 'package:meeting_app/features/authentication/screens/login/login_screen.dart';
 import 'package:meeting_app/features/authentication/widgets/auth_btn.dart';
 
 class SignupScreen extends StatelessWidget {
-  static String routePath = "signup";
+  static String routePath = "/signup";
   static String routeName = "signup";
   const SignupScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    context.goNamed(LoginScreen.routeName, pathParameters: {'tab': "home"});
+    context.goNamed(
+      LoginScreen.routeName,
+    );
   }
 
   @override

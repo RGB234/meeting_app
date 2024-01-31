@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/authentication/login/login_screen.dart';
-import 'package:meeting_app/features/authentication/signup/signup_screen.dart';
+import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
+import 'package:meeting_app/features/authentication/screens/login/login_screen.dart';
+import 'package:meeting_app/features/authentication/screens/signup/signup_screen.dart';
 import 'package:meeting_app/features/home/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/widgets/sidebar_menu.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   static String routePath = "/:tab(home|chat|explore|likes)";
   static String routeName = "home";
   final String tab;
@@ -19,26 +21,26 @@ class HomeScreen extends StatefulWidget {
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final List<String> _tabOpt = ["home", "chat", "explore", 'likes'];
   late int _selectedIndex = _tabOpt.indexOf(widget.tab);
 
   void _onSwitchIndexTap(int value) {
     setState(() {
       _selectedIndex = value;
-      context.go("/${_tabOpt[_selectedIndex]}");
     });
+    context.go("/${_tabOpt[_selectedIndex]}");
   }
 
   void _onSignUpTap(BuildContext context) {
-    context.pushNamed(SignupScreen.routeName, pathParameters: {'tab': "home"});
+    context.pushNamed(SignupScreen.routeName);
   }
 
   void _onLoginTap(BuildContext context) {
-    context.pushNamed(LoginScreen.routeName, pathParameters: {'tab': "home"});
+    context.pushNamed(LoginScreen.routeName);
   }
 
   @override

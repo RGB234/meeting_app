@@ -1,16 +1,16 @@
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/router.dart';
-// import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/sizes.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(
     const ProviderScope(
@@ -19,13 +19,13 @@ void main() async {
   );
 }
 
-class MeetingApp extends StatelessWidget {
+class MeetingApp extends ConsumerWidget {
   const MeetingApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       title: "Test",
       theme: ThemeData(
@@ -40,16 +40,6 @@ class MeetingApp extends StatelessWidget {
               fontWeight: FontWeight.w300,
             )),
       ),
-      // Navigator version 1
-      // initialRoute: HomeScreen.routeName,
-      // routes: {
-      //   HomeScreen.routeName: (context) => const HomeScreen(),
-      //   LoginScreen.routeName: (context) => const LoginScreen(),
-      //   EmailLogInScreen.routeName: (context) => const EmailLogInScreen(),
-      //   SignupScreen.routeName: (context) => const SignupScreen(),
-      //   EmailSignUpScreen.routeName: (context) => const EmailSignUpScreen(),
-      //   VideoScreen.routeName: (context) => const VideoScreen(),
-      // },
     );
   }
 }

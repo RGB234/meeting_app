@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meeting_app/features/authentication/login/email_login_screen.dart';
-import 'package:meeting_app/features/authentication/signup/email_signup_screen.dart';
+import 'package:meeting_app/features/authentication/screens/login/email_login_screen.dart';
+import 'package:meeting_app/features/authentication/screens/signup/email_signup_screen.dart';
 
 class AuthBtn extends StatelessWidget {
   final String text;
@@ -55,11 +54,19 @@ class AuthBtns extends StatelessWidget {
 
   void _onEmailTap(BuildContext context) {
     if (isSignUp) {
-      context.pushNamed(EmailSignUpScreen.routeName,
-          pathParameters: {'tab': "home"});
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EmailSignUpScreen(),
+        ),
+      );
     } else {
-      context.pushNamed(EmailLogInScreen.routeName,
-          pathParameters: {'tab': "home"});
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EmailLogInScreen(),
+        ),
+      );
     }
   }
 

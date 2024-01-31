@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
+import 'package:meeting_app/features/authentication/view_models/signup_view_model.dart';
 import 'package:meeting_app/features/home/home_screen.dart';
 
-class EmailSignUpForm extends StatefulWidget {
+class EmailSignUpForm extends ConsumerStatefulWidget {
   const EmailSignUpForm({super.key});
 
   @override
-  State<EmailSignUpForm> createState() => _EmailSignUpFormState();
+  ConsumerState<EmailSignUpForm> createState() => _EmailSignUpFormState();
 }
 
-class _EmailSignUpFormState extends State<EmailSignUpForm> {
+class _EmailSignUpFormState extends ConsumerState<EmailSignUpForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isObsecure = true;
   Map<String, String> formData = {};
@@ -64,9 +66,21 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
     if (_formkey.currentState != null) {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
-        context.goNamed(HomeScreen.routeName, pathParameters: {'tab': "home"});
+        ref.read(signUpForm.notifier).state = {
+          "email": formData['email'],
+          "password": formData['password'],
+        };
+        ref.read(signUpProvider.notifier).signUp();
+        _goHomeScreen();
       }
     }
+  }
+
+  void _goHomeScreen() {
+    context.goNamed(
+      HomeScreen.routeName,
+      pathParameters: {'tab': 'home'},
+    );
   }
 
   @override
