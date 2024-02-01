@@ -11,7 +11,7 @@ class SigninScreen extends StatelessWidget {
   const SigninScreen({super.key});
 
   void _onRegisterTap(BuildContext context) {
-    context.goNamed(
+    context.replaceNamed(
       RegisterScreen.routeName,
     );
   }

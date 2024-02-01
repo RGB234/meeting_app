@@ -9,6 +9,7 @@ import 'package:meeting_app/features/authentication/repos/authentication_repo.da
 import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
 import 'package:meeting_app/features/authentication/screens/register/register_screen.dart';
 import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
+import 'package:meeting_app/features/authentication/view_models/signout_view_model.dart';
 import 'package:meeting_app/features/home/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/widgets/sidebar_menu.dart';
 
@@ -45,7 +46,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _onSignOutTap() {
-    ref.read(registerProvider.notifier).signOut();
+    ref.read(signOutProvider.notifier).signOut(context);
   }
 
   @override

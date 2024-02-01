@@ -1,24 +1,24 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/utils.dart';
 
-class RegisterViewModel extends AsyncNotifier<void> {
+class SignInViewModel extends AsyncNotifier<void> {
   late final AuthenticationRepository _authRepo;
   @override
   FutureOr<void> build() {
     _authRepo = ref.read(authRepo);
   }
 
-  Future<void> register(BuildContext context) async {
+  Future<void> signIn(BuildContext context) async {
     state = const AsyncValue.loading();
-    final form = ref.read(registerForm);
+    final form = ref.read(signInForm);
     state = await AsyncValue.guard(
-      () async => _authRepo.register(
-        form["email"],
-        form["password"],
+      () async => _authRepo.signIn(
+        form['email'],
+        form['password'],
       ),
     );
     if (context.mounted) {
@@ -27,14 +27,9 @@ class RegisterViewModel extends AsyncNotifier<void> {
       }
     }
   }
-
-  bool isSignedIn() {
-    return ref.read(authRepo).isSignedIn;
-  }
 }
 
-final registerForm = StateProvider((ref) => {});
+final signInForm = StateProvider((ref) => {});
 
-final registerProvider = AsyncNotifierProvider<RegisterViewModel, void>(
-  () => RegisterViewModel(),
-);
+final signInProvider =
+    AsyncNotifierProvider<SignInViewModel, void>(() => SignInViewModel());

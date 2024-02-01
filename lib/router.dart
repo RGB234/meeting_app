@@ -8,12 +8,13 @@ import 'package:meeting_app/features/home/home_screen.dart';
 import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
 
 final routerProvider = Provider((ref) {
+  // rebuild when authState has been changed;
   ref.watch(authState);
   return GoRouter(
     initialLocation: "/explore",
     redirect: (context, state) {
       final location = state.matchedLocation;
-      final isSignedIn = ref.read(authRepo).isSignedIn;
+      final isSignedIn = ref.watch(authRepo).isSignedIn;
       if (!isSignedIn) {
         if (location != "/explore") {
           if (location == SigninScreen.routePath ||

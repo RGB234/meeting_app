@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/home/home_screen.dart';
+import 'package:meeting_app/features/authentication/view_models/signin_view_model.dart';
 
-class EmailSigninForm extends StatefulWidget {
+class EmailSigninForm extends ConsumerStatefulWidget {
   const EmailSigninForm({super.key});
 
   @override
-  State<EmailSigninForm> createState() => _EmailSigninFormState();
+  ConsumerState<EmailSigninForm> createState() => _EmailSigninFormState();
 }
 
-class _EmailSigninFormState extends State<EmailSigninForm> {
+class _EmailSigninFormState extends ConsumerState<EmailSigninForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isObsecure = true;
   Map<String, String> formData = {};
@@ -51,9 +51,14 @@ class _EmailSigninFormState extends State<EmailSigninForm> {
     if (_formkey.currentState != null) {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
-        context.goNamed(
-          HomeScreen.routeName,
-        );
+        ref.read(signInForm.notifier).state = {
+          'email': formData['email'],
+          'password': formData['password'],
+        };
+        ref.read(signInProvider.notifier).signIn(context);
+
+        // context.goNamed(HomeScreen.routeName, pathParameters: {'tab': 'home'});
+
         // Navigator.of(context).pushAndRemoveUntil(
         //   MaterialPageRoute(
         //     builder: (context) => const HomeScreen(
