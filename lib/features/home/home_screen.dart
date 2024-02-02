@@ -55,9 +55,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.watch(authState);
     return Scaffold(
       appBar: AppBar(
-        elevation: 1.5,
-        shadowColor: Colors.black87,
-        title: const Text("{대충계정명}"),
+        elevation: 0,
+        // shadowColor: Colors.grey,
+        title: Text(
+          "Marigold",
+          style: TextStyle(
+            fontFamily: 'Telma',
+            fontWeight: FontWeight.w500,
+            fontSize: Sizes.size20,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
         actions: [
           ref.read(registerProvider.notifier).isSignedIn()
               ? Row(

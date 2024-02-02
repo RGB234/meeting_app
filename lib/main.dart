@@ -30,10 +30,11 @@ class MeetingApp extends ConsumerWidget {
       title: "Test",
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        primaryColor: const Color.fromARGB(255, 208, 195, 255),
+        // french marrigold color()
+        primaryColor: const Color.fromRGBO(252, 148, 56, 1),
         appBarTheme: const AppBarTheme(
-            foregroundColor: Colors.black,
-            backgroundColor: Color.fromARGB(255, 208, 195, 255),
+            // foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
             elevation: 0,
             titleTextStyle: TextStyle(
               fontSize: Sizes.size16,

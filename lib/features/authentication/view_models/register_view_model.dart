@@ -21,9 +21,15 @@ class RegisterViewModel extends AsyncNotifier<void> {
         form["password"],
       ),
     );
-    if (context.mounted) {
-      if (state.hasError) {
-        showFirebaseErrorSnack(context, state.error);
+    while (true) {
+      // context.mounted가 true가 될 때까지 대기
+      if (context.mounted) {
+        if (state.hasError) {
+          showFirebaseErrorSnack(context, state.error);
+        }
+        break;
+      } else {
+        await Future.delayed(const Duration(milliseconds: 100));
       }
     }
   }

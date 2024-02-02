@@ -15,9 +15,15 @@ class SignOutViewModel extends AsyncNotifier<void> {
   Future<void> signOut(BuildContext context) async {
     await _authRepo.signOut();
 
-    if (context.mounted) {
-      if (state.hasError) {
-        showFirebaseErrorSnack(context, state.error);
+    while (true) {
+      // context.mounted가 true가 될 때까지 대기
+      if (context.mounted) {
+        if (state.hasError) {
+          showFirebaseErrorSnack(context, state.error);
+        }
+        break;
+      } else {
+        await Future.delayed(const Duration(milliseconds: 100));
       }
     }
   }
