@@ -49,7 +49,7 @@ class SingleGroupChat extends StatelessWidget {
                     color: Colors.grey.shade600,
                   ),
                 ),
-                Gaps.v8,
+                Gaps.v12,
                 Text(text),
               ],
             ),
@@ -72,7 +72,7 @@ class GroupChats extends StatelessWidget {
         text: "햄스터랑 지구정복할 사람구해요. 고양이 정중히 사절🙏 자세한 문의 DM 부탁드려요🙏",
         chatId: "$index",
       ),
-      separatorBuilder: (context, index) => Gaps.v32,
+      separatorBuilder: (context, index) => Gaps.v48,
       itemCount: 7,
       scrollDirection: Axis.vertical,
     );

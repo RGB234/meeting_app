@@ -1,11 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
 import 'package:meeting_app/features/authentication/screens/register/register_screen.dart';
 import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
@@ -34,6 +33,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       _selectedIndex = value;
     });
+
     context.go("/${_tabOpt[_selectedIndex]}");
   }
 
@@ -51,8 +51,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // rebuild when authState is changed.
-    ref.watch(authState);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -74,7 +72,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       onTap: () => _onSignOutTap(),
                       child: const Padding(
                         padding: EdgeInsets.only(right: 18),
-                        child: Text("Sign out"),
+                        child: Text(
+                          "Sign out",
+                        ),
                       ),
                     ),
                   ],
@@ -85,14 +85,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       onTap: () => _onSigninTap(context),
                       child: const Padding(
                         padding: EdgeInsets.only(right: 18),
-                        child: Text("Sign in"),
+                        child: Text(
+                          "Sign in",
+                        ),
                       ),
                     ),
                     GestureDetector(
                       onTap: () => _onRegisterTap(context),
                       child: const Padding(
                         padding: EdgeInsets.only(right: 24),
-                        child: Text("Register"),
+                        child: Text(
+                          "Register",
+                        ),
                       ),
                     ),
                   ],
@@ -100,30 +104,36 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
       drawer: const SideBarMenu(),
-      bottomNavigationBar: GNav(
-        selectedIndex: _selectedIndex,
-        onTabChange: (value) => _onSwitchIndexTap(value),
-        gap: 4,
-        tabs: const [
-          GButton(
-            iconSize: Sizes.size24,
-            icon: Icons.house_outlined,
-            text: "Home",
+      bottomNavigationBar: CupertinoTabBar(
+        // height: Sizes.size60,
+        // border: const Border(top: BorderSide(width: 0)),
+        backgroundColor: Colors.white70,
+        currentIndex: _selectedIndex,
+        activeColor: Theme.of(context).primaryColor,
+        onTap: (value) {
+          if (!mounted) return;
+          return _onSwitchIndexTap(value);
+        },
+        items: const [
+          // Home
+          BottomNavigationBarItem(
+            icon: Icon(Icons.house_outlined),
+            label: "Home",
           ),
-          GButton(
-            iconSize: Sizes.size20,
-            icon: FontAwesomeIcons.comment,
-            text: "Chat",
+          // Chat
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.comment),
+            label: "Chat",
           ),
-          GButton(
-            iconSize: Sizes.size20,
-            icon: FontAwesomeIcons.magnifyingGlass,
-            text: "Explore",
+          // Explore
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.magnifyingGlass),
+            label: "Explore",
           ),
-          GButton(
-            iconSize: Sizes.size20,
-            icon: FontAwesomeIcons.heart,
-            text: "Likes",
+          // Likes
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.heart),
+            label: "Likes",
           ),
         ],
       ),
@@ -134,15 +144,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               Offstage(
                 offstage: _selectedIndex != 0,
-                child: const OffStateTestWidget(
-                  text: "Home",
+                child: const Center(
+                  child: Text("Under construction"),
                 ),
               ),
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 1,
-                child: const OffStateTestWidget(
-                  text: "Chat",
+                child: const Center(
+                  child: Text("Under construction"),
                 ),
               ),
               Gaps.v16,
@@ -153,39 +163,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 3,
-                child: const OffStateTestWidget(
-                  text: "Likes",
+                child: const Center(
+                  child: Text("Under construction"),
                 ),
               ),
             ],
           )),
     );
-  }
-}
-
-// test
-class OffStateTestWidget extends StatefulWidget {
-  final String? text;
-  const OffStateTestWidget({
-    super.key,
-    this.text,
-  });
-
-  @override
-  State<OffStateTestWidget> createState() => _OffStateTestWidgetState();
-}
-
-class _OffStateTestWidgetState extends State<OffStateTestWidget> {
-  int _count = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-        onPressed: () {
-          setState(() {
-            _count = _count + 1;
-          });
-        },
-        child: Text("${widget.text} - count is $_count"));
   }
 }

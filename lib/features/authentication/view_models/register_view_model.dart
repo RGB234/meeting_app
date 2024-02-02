@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
+import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
 
 class RegisterViewModel extends AsyncNotifier<void> {
@@ -15,14 +17,18 @@ class RegisterViewModel extends AsyncNotifier<void> {
   Future<void> register(BuildContext context) async {
     state = const AsyncValue.loading();
     final form = ref.read(registerForm);
+    final user = ref.read(userProvider.notifier);
     state = await AsyncValue.guard(
-      () async => _authRepo.register(
-        form["email"],
-        form["password"],
-      ),
+      () async {
+        final UserCredential credential = await _authRepo.register(
+          form["email"],
+          form["password"],
+        );
+        await user.createProfile(credential);
+      },
     );
     while (true) {
-      // context.mounted가 true가 될 때까지 대기
+      // wait until context.mounted == true
       if (context.mounted) {
         if (state.hasError) {
           showFirebaseErrorSnack(context, state.error);
