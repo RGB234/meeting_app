@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
-// import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "package:meeting_app/features/laboratory/videos/video_screen.dart";
+import 'package:meeting_app/features/user_account/views/user_profile_screen.dart';
 
 Widget buildMenuItems(BuildContext context) => SafeArea(
       child: Column(
@@ -9,7 +9,9 @@ Widget buildMenuItems(BuildContext context) => SafeArea(
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('내 정보'),
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(ProfileScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.assignment),

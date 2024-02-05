@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
-import 'package:meeting_app/features/authentication/widgets/auth_btn.dart';
+import 'package:meeting_app/features/authentication/views/signin/signin_screen.dart';
+import 'package:meeting_app/features/authentication/views/widgets/auth_btn.dart';
 
 class RegisterScreen extends StatelessWidget {
   static String routePath = "/Register";

@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/authentication/screens/signin/signin_screen.dart';
-import 'package:meeting_app/features/authentication/screens/register/register_screen.dart';
+import 'package:meeting_app/features/authentication/views/signin/signin_screen.dart';
+import 'package:meeting_app/features/authentication/views/register/register_screen.dart';
 import 'package:meeting_app/features/chat/chat_screen.dart';
 import 'package:meeting_app/features/home/home_screen.dart';
 import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
+import 'package:meeting_app/features/user_account/views/user_profile_screen.dart';
 
 final routerProvider = Provider((ref) {
   // rebuild when authState has been changed;
@@ -51,11 +52,16 @@ final routerProvider = Provider((ref) {
       ),
       GoRoute(
         name: ChatScreen.routeName,
-        path: ChatScreen.routeRoute,
+        path: ChatScreen.routePath,
         builder: (context, state) {
           final chatId = state.pathParameters['chatId']!;
           return ChatScreen(chatId: chatId);
         },
+      ),
+      GoRoute(
+        name: ProfileScreen.routeName,
+        path: ProfileScreen.routePath,
+        builder: (context, state) => const ProfileScreen(),
       ),
       // Lab (test features)
       GoRoute(

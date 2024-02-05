@@ -134,13 +134,15 @@ class _EmailSigninFormState extends ConsumerState<EmailSigninForm> {
             ),
             child: GestureDetector(
               onTap: () => _onSubmitTap(),
-              child: const Text(
-                "Sign in",
-                style: TextStyle(
-                  fontSize: Sizes.size12,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
+              child: ref.watch(signInProvider).isLoading
+                  ? const CircularProgressIndicator.adaptive()
+                  : const Text(
+                      "Sign in",
+                      style: TextStyle(
+                        fontSize: Sizes.size12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
             ),
           ),
         ],

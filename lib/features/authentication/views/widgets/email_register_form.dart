@@ -65,8 +65,9 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
         ref.read(registerForm.notifier).state = {
-          "email": formData['email'],
-          "password": formData['password'],
+          "username": formData["username"],
+          "email": formData["email"],
+          "password": formData["password"],
         };
         // create account, sign in, and then go to initiallocation
         ref.read(registerProvider.notifier).register(context);
@@ -150,13 +151,15 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
             ),
             child: GestureDetector(
               onTap: () => _onSubmitTap(),
-              child: const Text(
-                "회원가입",
-                style: TextStyle(
-                  fontSize: Sizes.size12,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
+              child: ref.watch(registerProvider).isLoading
+                  ? const CircularProgressIndicator.adaptive()
+                  : const Text(
+                      "회원가입",
+                      style: TextStyle(
+                        fontSize: Sizes.size12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
             ),
           ),
         ],

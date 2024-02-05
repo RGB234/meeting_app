@@ -6,7 +6,7 @@ import 'package:meeting_app/features/chat/widget/message.dart';
 
 class ChatScreen extends StatefulWidget {
   static const routeName = "chatroom";
-  static const routeRoute = "/:chatId";
+  static const routePath = "/chat/:chatId";
   final String chatId;
   const ChatScreen({super.key, required this.chatId});
 

@@ -14,7 +14,7 @@ class VideoItem extends StatefulWidget {
 
 class _VideoItemState extends State<VideoItem> {
   final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("lib/assets/videos/hamzzi.mp4");
+      VideoPlayerController.asset("assets/videos/hamzzi.mp4");
 
   void _onVideoPlayEnd() {
     if (_videoPlayerController.value.isInitialized) {

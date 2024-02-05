@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meeting_app/features/authentication/screens/signin/email_signin_screen.dart';
-import 'package:meeting_app/features/authentication/screens/register/email_register_screen.dart';
+import 'package:meeting_app/features/authentication/views/signin/email_signin_screen.dart';
+import 'package:meeting_app/features/authentication/views/register/email_register_screen.dart';
 
 class AuthBtn extends StatelessWidget {
   final String text;
