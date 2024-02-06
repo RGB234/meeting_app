@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
+import 'package:meeting_app/features/user_account/views/widgets/profile_photo.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   static String routeName = "profile";
@@ -31,37 +32,34 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      radius: 80,
-                      foregroundImage: data.photoURL != null
-                          ? NetworkImage(data.photoURL!)
-                          : null,
-                      child: Text(data.username),
+                    ProfilePhoto(
+                      username: data.username,
+                      photoURL: data.photoURL,
                     ),
                     Gaps.v32,
                     Gaps.v32,
                     ListTile(
-                      title: Text("이름"),
+                      title: const Text("이름"),
                       subtitle: Text(data.username),
                     ),
                     ListTile(
-                      title: Text("이메일"),
+                      title: const Text("이메일"),
                       subtitle: Text(data.email),
                     ),
                     ListTile(
-                      title: Text("성별"),
+                      title: const Text("성별"),
                       subtitle: Text(data.sex ?? "sex"),
                     ),
                     ListTile(
-                      title: Text("나이"),
+                      title: const Text("나이"),
                       subtitle: Text(data.age ?? "age"),
                     ),
                     ListTile(
-                      title: Text("전화번호"),
+                      title: const Text("전화번호"),
                       subtitle: Text(data.phoneNumber ?? "phone number"),
                     ),
                     ListTile(
-                      title: Text("소속"),
+                      title: const Text("소속"),
                       subtitle: Text(data.affiliation ?? "affiliation"),
                     ),
                   ],

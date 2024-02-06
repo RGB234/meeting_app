@@ -38,6 +38,8 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     await _userRepo.createProfile(userProfile);
     state = AsyncValue.data(userProfile);
   }
+
+  Future<void> modifyProfile(UserCredential credential) async {}
 }
 
 final userProvider = AsyncNotifierProvider<UserViewModel, UserProfileModel>(
