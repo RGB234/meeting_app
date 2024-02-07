@@ -39,7 +39,9 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     state = AsyncValue.data(userProfile);
   }
 
-  Future<void> modifyProfile(UserCredential credential) async {}
+  Future<void> updateProfile(Map<String, dynamic> data) async {
+    await _userRepo.updateProfile(_authRepo.user!.uid, data);
+  }
 }
 
 final userProvider = AsyncNotifierProvider<UserViewModel, UserProfileModel>(

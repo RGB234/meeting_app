@@ -2,29 +2,30 @@ class UserProfileModel {
   final String uid;
   final String email;
   final String username;
-  final String? sex;
-  final String? age;
+  // if photoURL is null >> profile image is null
   final String? photoURL;
-  final String? phoneNumber;
-  final String? affiliation;
+  final String gender;
+  final String birthday;
+  final String phoneNumber;
+  final String affiliation;
 
   UserProfileModel({
     required this.uid,
     required this.email,
     required this.username,
-    this.sex,
-    this.age,
     this.photoURL,
-    this.phoneNumber,
-    this.affiliation,
+    this.gender = "None(gender)",
+    this.birthday = "None(birthday)",
+    this.phoneNumber = "None(phoneNumber)",
+    this.affiliation = "None(affiliation)",
   });
 
   UserProfileModel.empty()
       : uid = "",
         email = "",
         username = "",
-        sex = "",
-        age = "",
+        gender = "",
+        birthday = "",
         photoURL = "",
         phoneNumber = "",
         affiliation = "";
@@ -33,8 +34,8 @@ class UserProfileModel {
       : uid = json["uid"],
         email = json["email"],
         username = json["username"],
-        sex = json["sex"],
-        age = json["age"],
+        gender = json["gender"],
+        birthday = json["birthday"],
         photoURL = json["photoURL"],
         phoneNumber = json["phoneNumber"],
         affiliation = json["affiliation"];
@@ -44,11 +45,11 @@ class UserProfileModel {
       "uid": uid,
       "email": email,
       "username": username,
-      "sex": sex ?? "None(sex)",
-      "age": age ?? "None(age)",
+      "gender": gender,
+      "birthday": birthday,
       "photoURL": photoURL,
-      "phoneNumber": phoneNumber ?? "None(phoneNumber)",
-      "affiliation": affiliation ?? "None(affiliation)",
+      "phoneNumber": phoneNumber,
+      "affiliation": affiliation,
     };
   }
 
@@ -56,8 +57,8 @@ class UserProfileModel {
     String? uid,
     String? email,
     String? username,
-    String? sex,
-    String? age,
+    String? gender,
+    String? birthday,
     String? photoURL,
     String? phoneNumber,
     String? affiliation,
@@ -66,8 +67,8 @@ class UserProfileModel {
       uid: uid ?? this.uid,
       email: email ?? this.email,
       username: username ?? this.username,
-      sex: sex ?? this.sex,
-      age: age ?? this.age,
+      gender: gender ?? this.gender,
+      birthday: birthday ?? this.birthday,
       photoURL: photoURL ?? this.photoURL,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       affiliation: affiliation ?? this.affiliation,

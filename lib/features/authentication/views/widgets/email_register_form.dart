@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
+import 'package:meeting_app/utils.dart';
 
 class EmailRegisterForm extends ConsumerStatefulWidget {
   const EmailRegisterForm({super.key});
@@ -16,49 +17,6 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isObsecure = true;
   Map<String, String> formData = {};
-
-  String? _isUsernameValid({String? value}) {
-    if (value == null) {
-      return null;
-    }
-    final regExp = RegExp(r"[ㄱ-ㅎㅏ-ㅣ가-힣a-z0-9A-Z]{1,12}");
-    if (regExp.hasMatch(value) && value.length < 13) {
-      return null;
-    } else if (value.isEmpty) {
-      return "빈 칸을 채워야 합니다.";
-    } else {
-      return "1~12자리";
-    }
-  }
-
-  String? _isEmailValid({String? value}) {
-    if (value == null) {
-      return null;
-    }
-    final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (regExp.hasMatch(value)) {
-      return null;
-    } else if (value.isEmpty) {
-      return "빈 칸을 채워야 합니다.";
-    } else {
-      return "유효하지 않은 이메일 형태입니다.";
-    }
-  }
-
-  String? _isPasswordValid({String? value}) {
-    if (value == null) {
-      return null;
-    }
-    final regExp = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$");
-    if (regExp.hasMatch(value) && value.length < 17) {
-      return null;
-    } else if (value.isEmpty) {
-      return "빈 칸을 채워야 합니다.";
-    } else {
-      return "최소 8자리 - 최대 20자리. 대문자, 소문자, 숫자 각각 최소 1개씩 사용";
-    }
-  }
 
   void _onSubmitTap() {
     if (_formkey.currentState != null) {
@@ -82,7 +40,8 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
       child: Column(
         children: [
           TextFormField(
-            validator: (value) => _isUsernameValid(value: value),
+            validator: (value) =>
+                AuthenticationValidator.isUsernameValid(value: value),
             // memo : newValue is the value it had at the moment the _onSubmit function was executed.
             onSaved: (newValue) {
               if (newValue != null) {
@@ -96,7 +55,8 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
           ),
           Gaps.v12,
           TextFormField(
-            validator: (value) => _isEmailValid(value: value),
+            validator: (value) =>
+                AuthenticationValidator.isEmailValid(value: value),
             onSaved: (newValue) {
               if (newValue != null) {
                 formData['email'] = newValue;
@@ -110,7 +70,8 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
           ),
           Gaps.v12,
           TextFormField(
-            validator: (value) => _isPasswordValid(value: value),
+            validator: (value) =>
+                AuthenticationValidator.isPasswordValid(value: value),
             onSaved: (newValue) {
               if (newValue != null) {
                 formData['password'] = newValue;
