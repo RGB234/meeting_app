@@ -8,14 +8,18 @@ import 'package:meeting_app/features/user_account/models/user_profile_model.dart
 import 'package:meeting_app/features/user_account/repos/user_repo.dart';
 
 class UserViewModel extends AsyncNotifier<UserProfileModel> {
-  late final UserRepository _userRepo;
-  late final AuthenticationRepository _authRepo;
+  // _userRepo, and _authRepo will be updated
+  // when a user changes profile setting or resign-in with another account
+  // so, don't change these 'final'
+  late UserRepository _userRepo;
+  late AuthenticationRepository _authRepo;
   @override
   FutureOr<UserProfileModel> build() async {
     _userRepo = ref.read(userRepo);
     _authRepo = ref.read(authRepo);
 
     if (_authRepo.isSignedIn) {
+      state = const AsyncValue.loading();
       final profile = await _userRepo.fetchProfile(_authRepo.user!.uid);
       if (profile != null) {
         return UserProfileModel.fromJson(profile);
@@ -45,5 +49,7 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
 }
 
 final userProvider = AsyncNotifierProvider<UserViewModel, UserProfileModel>(
-  () => UserViewModel(),
+  () {
+    return UserViewModel();
+  },
 );

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
+import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
 
 class SignOutViewModel extends AsyncNotifier<void> {
@@ -26,6 +27,7 @@ class SignOutViewModel extends AsyncNotifier<void> {
         await Future.delayed(const Duration(milliseconds: 100));
       }
     }
+    ref.invalidate(userProvider);
   }
 }
 

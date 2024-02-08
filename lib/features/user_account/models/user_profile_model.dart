@@ -14,10 +14,10 @@ class UserProfileModel {
     required this.email,
     required this.username,
     this.photoURL,
-    this.gender = "None(gender)",
-    this.birthday = "None(birthday)",
-    this.phoneNumber = "None(phoneNumber)",
-    this.affiliation = "None(affiliation)",
+    this.gender = "",
+    this.birthday = "",
+    this.phoneNumber = "",
+    this.affiliation = "",
   });
 
   UserProfileModel.empty()
