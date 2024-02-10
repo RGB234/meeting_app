@@ -16,6 +16,9 @@ final routerProvider = Provider((ref) {
     redirect: (context, state) {
       final location = state.matchedLocation;
       final isSignedIn = ref.watch(authRepo).isSignedIn;
+      // exception handling for route "/";
+      if (location == "/") return "/explore";
+
       if (!isSignedIn) {
         if (location != "/explore") {
           if (location == SigninScreen.routePath ||

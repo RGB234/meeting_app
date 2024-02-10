@@ -17,15 +17,20 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
   FutureOr<UserProfileModel> build() async {
     _userRepo = ref.read(userRepo);
     _authRepo = ref.read(authRepo);
+    late final UserProfileModel userProfile;
 
     if (_authRepo.isSignedIn) {
       state = const AsyncValue.loading();
       final profile = await _userRepo.fetchProfile(_authRepo.user!.uid);
       if (profile != null) {
-        return UserProfileModel.fromJson(profile);
+        userProfile = UserProfileModel.fromJson(profile);
+        state = AsyncValue.data(userProfile);
       }
+    } else {
+      userProfile = UserProfileModel.empty();
+      state = AsyncValue.data(userProfile);
     }
-    return UserProfileModel.empty();
+    return userProfile;
   }
 
   Future<void> createProfile(UserCredential credential) async {
@@ -45,6 +50,8 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
 
   Future<void> updateProfile(Map<String, dynamic> data) async {
     await _userRepo.updateProfile(_authRepo.user!.uid, data);
+    // refresh
+    ref.invalidateSelf();
   }
 }
 

@@ -73,7 +73,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future<void> _onSelectDate(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
     if (selectedDate != null) {
@@ -91,8 +91,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
         await ref.read(userProvider.notifier).updateProfile(formData);
-        // refresh
-        ref.invalidate(userProvider);
       }
     }
   }
