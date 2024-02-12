@@ -33,7 +33,7 @@ class _MyChatScreenState extends ConsumerState<MyChatScreen> {
               data: (data) {
                 return ListView.separated(
                   itemBuilder: (context, index) {
-                    return Text(data.elementAt(index).title.toString());
+                    return Text(data.elementAt(index).subtitle.toString());
                   },
                   separatorBuilder: (context, index) {
                     return Gaps.v12;
