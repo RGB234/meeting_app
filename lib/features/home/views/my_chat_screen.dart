@@ -33,7 +33,42 @@ class _MyChatScreenState extends ConsumerState<MyChatScreen> {
               data: (data) {
                 return ListView.separated(
                   itemBuilder: (context, index) {
-                    return Text(data.elementAt(index).subtitle.toString());
+                    // return Text(data.elementAt(index).subtitle);
+                    return GestureDetector(
+                      onTap: () => {},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const CircleAvatar(
+                            radius: 26,
+                            backgroundImage: NetworkImage(
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn5652UtfUdYwTHiiL_2_YtvypxsIxTSiVwg&usqp=CAU"),
+                          ),
+                          Gaps.h12,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Male : ${data.elementAt(index).numCurrentMale}/${data.elementAt(index).numMaxMale}",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                                Text(
+                                  "Female : ${data.elementAt(index).numCurrentFemale}/${data.elementAt(index).numMaxFemale}",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                                Gaps.v12,
+                                Text(data.elementAt(index).title),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return Gaps.v12;
@@ -44,7 +79,7 @@ class _MyChatScreenState extends ConsumerState<MyChatScreen> {
               error: (error, stackTrace) => Center(
                 child: Text(error.toString()),
               ),
-              loading: () => Center(
+              loading: () => const Center(
                 child: CircularProgressIndicator.adaptive(),
               ),
             )

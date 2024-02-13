@@ -9,8 +9,8 @@ import 'package:meeting_app/features/authentication/views/signin/signin_screen.d
 import 'package:meeting_app/features/authentication/views/register/register_screen.dart';
 import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
 import 'package:meeting_app/features/authentication/view_models/signout_view_model.dart';
+import 'package:meeting_app/features/home/views/explore_screen.dart';
 import 'package:meeting_app/features/home/views/my_chat_screen.dart';
-import 'package:meeting_app/features/home/views/widgets/group_chats.dart';
 import 'package:meeting_app/features/home/views/widgets/sidebar_menu.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -140,7 +140,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: Padding(
           padding: const EdgeInsets.fromLTRB(
-              Sizes.size32, Sizes.size24, Sizes.size32, 0),
+              Sizes.size24, Sizes.size12, Sizes.size24, 0),
           child: Stack(
             children: [
               Offstage(
@@ -157,7 +157,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 2,
-                child: const GroupChats(),
+                child: ExploreScreen(),
               ),
               Gaps.v16,
               Offstage(

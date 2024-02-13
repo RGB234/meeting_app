@@ -4,7 +4,6 @@ class ChatRoomModel {
   final int numCurrentMale;
   final int numMaxFemale;
   final int numMaxMale;
-  final String subtitle;
   final String title;
 
   ChatRoomModel({
@@ -13,7 +12,6 @@ class ChatRoomModel {
     required this.numCurrentMale,
     required this.numMaxFemale,
     required this.numMaxMale,
-    required this.subtitle,
     required this.title,
   });
 
@@ -23,7 +21,6 @@ class ChatRoomModel {
         numCurrentMale = json["numCurrentMale"],
         numMaxFemale = json["numMaxFemale"],
         numMaxMale = json["numMaxMale"],
-        subtitle = json["subtitle"],
         title = json["title"];
 
   Map<String, dynamic> toJson() {
@@ -33,7 +30,6 @@ class ChatRoomModel {
       "numCurrentMale": numCurrentMale,
       "numMaxFemale": numMaxFemale,
       "numMaxMale": numMaxMale,
-      "subtitle": subtitle,
       "title": title,
     };
   }
@@ -53,7 +49,6 @@ class ChatRoomModel {
         numCurrentMale: numCurrentMale ?? this.numCurrentMale,
         numMaxFemale: numMaxFemale ?? this.numMaxFemale,
         numMaxMale: numMaxMale ?? this.numMaxMale,
-        subtitle: subtitle ?? this.subtitle,
         title: title ?? this.title);
   }
 }
