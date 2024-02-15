@@ -152,12 +152,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 1,
-                child: MyChatScreen(),
+                child: const MyChatScreen(),
               ),
               Gaps.v16,
               Offstage(
                 offstage: _selectedIndex != 2,
-                child: ExploreScreen(),
+                child: const ExploreScreen(),
               ),
               Gaps.v16,
               Offstage(

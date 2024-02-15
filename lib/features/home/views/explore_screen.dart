@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/home/models/chat_room_model.dart';
 import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
+import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
 class ExploreScreen extends ConsumerStatefulWidget {
   const ExploreScreen({super.key});
@@ -12,16 +12,14 @@ class ExploreScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ExploreScreenState();
 }
 
-enum NumOfPairs {
-  one,
-  two,
-  three,
-  four,
-}
-
 class _ExploreScreenState extends ConsumerState<ExploreScreen> {
+  final TextEditingController _controller = TextEditingController();
+  List<int> numOfPairsOption = [1, 2, 3, 4];
+  int? pairs = 4;
+
   Future<void> _showChatRoomPopup() {
-    NumOfPairs? pairs = NumOfPairs.one;
+    // ensure userProvider.value is not null because _addChatRoom() will use that
+    ref.read(userProvider);
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -33,11 +31,20 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("취소")),
-                    OutlinedButton(onPressed: () {}, child: const Text("생성")),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("취소"),
+                    ),
+                    OutlinedButton(
+                      onPressed: () {
+                        _addChatRoom(
+                          title: _controller.value.text,
+                          numOfPairs: pairs ?? 4,
+                        );
+                      },
+                      child: const Text("생성"),
+                    ),
                   ],
                 )
               ],
@@ -52,9 +59,10 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                         fontSize: Sizes.size16,
                       ),
                     ),
-                    const TextField(
+                    TextField(
+                      controller: _controller,
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: "title"),
+                      decoration: const InputDecoration(hintText: "title"),
                     ),
                     Gaps.v28,
                     Column(
@@ -67,7 +75,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                         ),
                         RadioListTile(
                           title: const Text("1:1"),
-                          value: NumOfPairs.one,
+                          value: numOfPairsOption[0],
                           groupValue: pairs,
                           onChanged: (value) {
                             setState(() {
@@ -77,7 +85,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                         ),
                         RadioListTile(
                           title: const Text("2:2"),
-                          value: NumOfPairs.two,
+                          value: numOfPairsOption[1],
                           groupValue: pairs,
                           onChanged: (value) {
                             setState(() {
@@ -87,7 +95,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                         ),
                         RadioListTile(
                           title: const Text("3:3"),
-                          value: NumOfPairs.three,
+                          value: numOfPairsOption[2],
                           groupValue: pairs,
                           onChanged: (value) {
                             setState(() {
@@ -97,7 +105,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                         ),
                         RadioListTile(
                           title: const Text("4:4"),
-                          value: NumOfPairs.four,
+                          value: numOfPairsOption[3],
                           groupValue: pairs,
                           onChanged: (value) {
                             setState(() {
@@ -105,7 +113,6 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                             });
                           },
                         ),
-                        Text(pairs.toString()),
                       ],
                     )
                   ],
@@ -116,6 +123,19 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
         );
       },
     );
+  }
+
+  Future<void> _addChatRoom(
+      {required String title, required int numOfPairs}) async {
+    final now = DateTime.now();
+    ref.read(chatRoomProvider.notifier).createNewChatRoom(
+          user: ref.read(userProvider).value!,
+          title: title,
+          numOfPairs: numOfPairs,
+          time: "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}",
+        );
+    _refreshList();
+    Navigator.of(context).pop();
   }
 
   void _refreshList() {
@@ -130,7 +150,6 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
               data: (data) {
                 return ListView.separated(
                   itemBuilder: (context, index) {
-                    // return Text(data.elementAt(index).subtitle);
                     return GestureDetector(
                       onTap: () => {},
                       child: Row(
@@ -168,7 +187,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return Gaps.v12;
+                    return Gaps.v24;
                   },
                   itemCount: data.length,
                 );

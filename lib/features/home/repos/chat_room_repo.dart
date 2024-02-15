@@ -7,11 +7,14 @@ class ChatRoomRepository {
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
       fetchChatRoomList() async {
-    final snapshot = await _db.collection("chat_rooms").get();
+    final snapshot = await _db
+        .collection("chat_rooms")
+        .orderBy("createdAt", descending: true)
+        .get();
     return snapshot.docs;
   }
 
-  Future<void> addChatRoom(ChatRoomModel chatroom) async {
+  Future<void> createNewChatRoom(ChatRoomModel chatroom) async {
     await _db.collection("chat_rooms").doc().set(chatroom.toJson());
   }
 }

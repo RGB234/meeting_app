@@ -5,6 +5,8 @@ class ChatRoomModel {
   final int numMaxFemale;
   final int numMaxMale;
   final String title;
+  final String createdAt;
+  final String createdBy;
 
   ChatRoomModel({
     required this.image,
@@ -13,7 +15,19 @@ class ChatRoomModel {
     required this.numMaxFemale,
     required this.numMaxMale,
     required this.title,
+    required this.createdAt,
+    required this.createdBy,
   });
+
+  ChatRoomModel.empty()
+      : image = "",
+        numCurrentFemale = 0,
+        numCurrentMale = 0,
+        numMaxFemale = 4,
+        numMaxMale = 4,
+        title = "",
+        createdAt = "",
+        createdBy = "";
 
   ChatRoomModel.fronJson(Map<String, dynamic> json)
       : image = json["image"],
@@ -21,7 +35,9 @@ class ChatRoomModel {
         numCurrentMale = json["numCurrentMale"],
         numMaxFemale = json["numMaxFemale"],
         numMaxMale = json["numMaxMale"],
-        title = json["title"];
+        title = json["title"],
+        createdAt = json["createdAt"],
+        createdBy = json["createdBy"];
 
   Map<String, dynamic> toJson() {
     return {
@@ -31,6 +47,8 @@ class ChatRoomModel {
       "numMaxFemale": numMaxFemale,
       "numMaxMale": numMaxMale,
       "title": title,
+      "createdAt": createdAt,
+      "createdBy": createdBy,
     };
   }
 
@@ -42,13 +60,18 @@ class ChatRoomModel {
     int? numMaxMale,
     String? subtitle,
     String? title,
+    String? createdAt,
+    String? createdBy,
   }) {
     return ChatRoomModel(
-        image: image ?? this.image,
-        numCurrentFemale: numCurrentFemale ?? this.numCurrentFemale,
-        numCurrentMale: numCurrentMale ?? this.numCurrentMale,
-        numMaxFemale: numMaxFemale ?? this.numMaxFemale,
-        numMaxMale: numMaxMale ?? this.numMaxMale,
-        title: title ?? this.title);
+      image: image ?? this.image,
+      numCurrentFemale: numCurrentFemale ?? this.numCurrentFemale,
+      numCurrentMale: numCurrentMale ?? this.numCurrentMale,
+      numMaxFemale: numMaxFemale ?? this.numMaxFemale,
+      numMaxMale: numMaxMale ?? this.numMaxMale,
+      title: title ?? this.title,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+    );
   }
 }
