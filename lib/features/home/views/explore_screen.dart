@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
+import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
@@ -125,8 +126,9 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     );
   }
 
-  Future<void> _addChatRoom(
-      {required String title, required int numOfPairs}) async {
+  void _entertheRoom() {}
+
+  void _addChatRoom({required String title, required int numOfPairs}) {
     final now = DateTime.now();
     ref.read(chatRoomProvider.notifier).createNewChatRoom(
           user: ref.read(userProvider).value!,
@@ -134,7 +136,6 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
           numOfPairs: numOfPairs,
           time: "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}",
         );
-    _refreshList();
     Navigator.of(context).pop();
   }
 
@@ -212,16 +213,18 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 icon: const Icon(Icons.refresh_outlined),
                 iconSize: Sizes.size28,
               ),
-              IconButton(
-                onPressed: () {
-                  _showChatRoomPopup();
-                },
-                icon: const Icon(Icons.add_circle_outline_rounded),
-                iconSize: Sizes.size28,
-              ),
+              ref.watch(authRepo).isSignedIn
+                  ? IconButton(
+                      onPressed: () {
+                        _showChatRoomPopup();
+                      },
+                      icon: const Icon(Icons.add_circle_outline_rounded),
+                      iconSize: Sizes.size28,
+                    )
+                  : Container(),
             ],
           ),
-        ),
+        )
       ],
     );
   }

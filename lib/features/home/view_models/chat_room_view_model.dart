@@ -49,7 +49,7 @@ class ChatRoomViewModels extends AsyncNotifier<List<ChatRoomModel>> {
       createdBy: userId,
     );
     await ref.read(chatRoomRepo).createNewChatRoom(createdChat);
-    // refresh();
+    refresh();
   }
 
   void refresh() {
