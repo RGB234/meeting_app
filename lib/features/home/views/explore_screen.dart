@@ -5,6 +5,7 @@ import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
+import 'package:meeting_app/utils.dart';
 
 class ExploreScreen extends ConsumerStatefulWidget {
   const ExploreScreen({super.key});
@@ -126,7 +127,9 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     );
   }
 
-  void _entertheRoom() {}
+  void _joinThisRoom({required String uid, required String roomid}) {
+    ref.read(chatRoomProvider.notifier).joinThisRoom(uid: uid, roomid: roomid);
+  }
 
   void _addChatRoom({required String title, required int numOfPairs}) {
     final now = DateTime.now();
@@ -145,6 +148,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isSignedIn = ref.watch(authRepo).isSignedIn;
     return Stack(
       children: [
         ref.watch(chatRoomProvider).when(
@@ -152,7 +156,15 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 return ListView.separated(
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => {},
+                      onTap: () {
+                        if (!isSignedIn) {
+                          showErrorSnack(context, "로그인이 필요한 서비스입니다.");
+                          return;
+                        }
+                        _joinThisRoom(
+                            uid: ref.watch(authRepo).user!.uid,
+                            roomid: data.elementAt(index).id);
+                      },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -213,7 +225,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 icon: const Icon(Icons.refresh_outlined),
                 iconSize: Sizes.size28,
               ),
-              ref.watch(authRepo).isSignedIn
+              isSignedIn
                   ? IconButton(
                       onPressed: () {
                         _showChatRoomPopup();

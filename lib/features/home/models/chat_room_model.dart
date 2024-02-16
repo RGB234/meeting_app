@@ -1,4 +1,5 @@
 class ChatRoomModel {
+  final String id;
   final String image;
   final int numCurrentFemale;
   final int numCurrentMale;
@@ -9,6 +10,7 @@ class ChatRoomModel {
   final String createdBy;
 
   ChatRoomModel({
+    required this.id,
     required this.image,
     required this.numCurrentFemale,
     required this.numCurrentMale,
@@ -20,7 +22,8 @@ class ChatRoomModel {
   });
 
   ChatRoomModel.empty()
-      : image = "",
+      : id = "",
+        image = "",
         numCurrentFemale = 0,
         numCurrentMale = 0,
         numMaxFemale = 4,
@@ -29,8 +32,9 @@ class ChatRoomModel {
         createdAt = "",
         createdBy = "";
 
-  ChatRoomModel.fronJson(Map<String, dynamic> json)
-      : image = json["image"],
+  ChatRoomModel.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        image = json["image"],
         numCurrentFemale = json["numCurrentFemale"],
         numCurrentMale = json["numCurrentMale"],
         numMaxFemale = json["numMaxFemale"],
@@ -41,6 +45,7 @@ class ChatRoomModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "image": image,
       "numCurrentFemale": numCurrentFemale,
       "numCurrentMale": numCurrentMale,
@@ -53,6 +58,7 @@ class ChatRoomModel {
   }
 
   ChatRoomModel copyWith({
+    String? id,
     String? image,
     int? numCurrentFemale,
     int? numCurrentMale,
@@ -64,6 +70,7 @@ class ChatRoomModel {
     String? createdBy,
   }) {
     return ChatRoomModel(
+      id: id ?? this.id,
       image: image ?? this.image,
       numCurrentFemale: numCurrentFemale ?? this.numCurrentFemale,
       numCurrentMale: numCurrentMale ?? this.numCurrentMale,

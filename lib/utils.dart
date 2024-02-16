@@ -10,6 +10,15 @@ void showFirebaseErrorSnack(BuildContext context, Object? err) {
   );
 }
 
+void showErrorSnack(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      showCloseIcon: true,
+      content: Text(message),
+    ),
+  );
+}
+
 class AuthenticationValidator {
   static String? isUsernameValid({required String? value}) {
     if (value == null) {

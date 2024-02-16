@@ -1,19 +1,23 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/home/models/chat_room_model.dart';
 import 'package:meeting_app/features/home/repos/chat_room_repo.dart';
 import 'package:meeting_app/features/user_account/models/user_profile_model.dart';
 
-class ChatRoomViewModels extends AsyncNotifier<List<ChatRoomModel>> {
+class ChatRoomViewModels extends AutoDisposeAsyncNotifier<List<ChatRoomModel>> {
   late ChatRoomRepository _chatRoomRepo;
 
   @override
   FutureOr<List<ChatRoomModel>> build() async {
     _chatRoomRepo = ref.read(chatRoomRepo);
-    final chatRoomList = await _chatRoomRepo.fetchChatRoomList();
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> chatRoomList;
+
+    // fetch total list
+    chatRoomList = await _chatRoomRepo.fetchChatRoomList();
     return chatRoomList
-        .map((element) => ChatRoomModel.fronJson(element.data()))
+        .map((element) => ChatRoomModel.fromJson(element.data()))
         .toList();
   }
 
@@ -52,12 +56,20 @@ class ChatRoomViewModels extends AsyncNotifier<List<ChatRoomModel>> {
     refresh();
   }
 
+  // update user's joined rooms list & chat_room's joined_users list
+  Future<void> joinThisRoom(
+      {required String uid, required String roomid}) async {
+    ref.read(chatRoomRepo).joinThisRoom(uid: uid, roomid: roomid);
+  }
+
+  void updateInfo() {}
+
   void refresh() {
     ref.invalidateSelf();
   }
 }
 
 final chatRoomProvider =
-    AsyncNotifierProvider<ChatRoomViewModels, List<ChatRoomModel>>(
+    AsyncNotifierProvider.autoDispose<ChatRoomViewModels, List<ChatRoomModel>>(
   () => ChatRoomViewModels(),
 );
