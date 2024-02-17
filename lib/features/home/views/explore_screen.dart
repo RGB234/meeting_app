@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
+import 'package:meeting_app/features/chat/chat_screen.dart';
 import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
@@ -127,17 +129,18 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     );
   }
 
-  void _joinThisRoom({required String uid, required String roomid}) {
-    ref.read(chatRoomProvider.notifier).joinThisRoom(uid: uid, roomid: roomid);
+  void _enterThisRoom({required String roomid}) {
+    ref.read(chatRoomProvider.notifier).joinThisRoom(roomid: roomid);
+    context.pushNamed(
+      ChatScreen.routeName,
+      pathParameters: {'chatId': roomid},
+    );
   }
 
   void _addChatRoom({required String title, required int numOfPairs}) {
-    final now = DateTime.now();
     ref.read(chatRoomProvider.notifier).createNewChatRoom(
-          user: ref.read(userProvider).value!,
           title: title,
           numOfPairs: numOfPairs,
-          time: "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}",
         );
     Navigator.of(context).pop();
   }
@@ -161,9 +164,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                           showErrorSnack(context, "로그인이 필요한 서비스입니다.");
                           return;
                         }
-                        _joinThisRoom(
-                            uid: ref.watch(authRepo).user!.uid,
-                            roomid: data.elementAt(index).id);
+                        _enterThisRoom(roomid: data.elementAt(index).id);
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,

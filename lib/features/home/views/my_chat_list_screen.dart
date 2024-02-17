@@ -4,18 +4,18 @@ import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
-import 'package:meeting_app/features/home/view_models/my_chat_room_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
 
-class MyChatScreen extends ConsumerStatefulWidget {
-  const MyChatScreen({super.key});
+class MyChatListScreen extends ConsumerStatefulWidget {
+  const MyChatListScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MyChatScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MyChatListScreenState();
 }
 
-class _MyChatScreenState extends ConsumerState<MyChatScreen> {
+class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
   final TextEditingController _controller = TextEditingController();
   List<int> numOfPairsOption = [1, 2, 3, 4];
   int? pairs = 4;
@@ -41,11 +41,11 @@ class _MyChatScreenState extends ConsumerState<MyChatScreen> {
                     ),
                     OutlinedButton(
                       onPressed: () {
-                        // _addChatRoom(
-                        //   uid: uid,
-                        //   title: _controller.value.text,
-                        //   numOfPairs: pairs ?? 4,
-                        // );
+                        _addChatRoom(
+                          uid: uid,
+                          title: _controller.value.text,
+                          numOfPairs: pairs ?? 4,
+                        );
                       },
                       child: const Text("생성"),
                     ),
@@ -129,33 +129,29 @@ class _MyChatScreenState extends ConsumerState<MyChatScreen> {
     );
   }
 
-  // void _enterthisRoom({required String uid, required String roomid}) {
-  //   ref
-  //       .read(myChatRoomProvider(uid).notifier)
-  //       .joinThisRoom(uid: uid, roomid: roomid);
-  // }
-
-  // void _addChatRoom(
-  //     {required String uid, required String title, required int numOfPairs}) {
-  //   final now = DateTime.now();
-  //   ref.read(chatRoomProvider(uid).notifier).createNewChatRoom(
-  //         user: ref.read(userProvider).value!,
-  //         title: title,
-  //         numOfPairs: numOfPairs,
-  //         time: "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}",
-  //       );
-  //   Navigator.of(context).pop();
-  // }
-
-  void _refreshList({required String uid}) {
-    ref.read(myChatRoomProvider(uid).notifier).refresh();
+  void _addChatRoom(
+      {required String uid, required String title, required int numOfPairs}) {
+    ref.read(chatRoomProvider.notifier).createNewChatRoom(
+          title: title,
+          numOfPairs: numOfPairs,
+        );
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     final isSignedIn = ref.watch(authRepo).isSignedIn;
     // only signed-in user can access to this screen
+    final user = ref.watch(authRepo).user;
+
+    if (user == null) {
+      return const Center(
+        child: Text("로그인이 필요한 서비스입니다."),
+      );
+    }
+
     final currentUserid = ref.watch(authRepo).user!.uid;
+
     return Stack(
       children: [
         ref.watch(myChatRoomProvider(currentUserid)).when(
@@ -224,20 +220,11 @@ class _MyChatScreenState extends ConsumerState<MyChatScreen> {
             children: [
               IconButton(
                 onPressed: () {
-                  _refreshList(uid: currentUserid);
+                  _showChatRoomPopup(uid: currentUserid);
                 },
-                icon: const Icon(Icons.refresh_outlined),
+                icon: const Icon(Icons.add_circle_outline_rounded),
                 iconSize: Sizes.size28,
-              ),
-              isSignedIn
-                  ? IconButton(
-                      onPressed: () {
-                        _showChatRoomPopup(uid: currentUserid);
-                      },
-                      icon: const Icon(Icons.add_circle_outline_rounded),
-                      iconSize: Sizes.size28,
-                    )
-                  : Container(),
+              )
             ],
           ),
         )

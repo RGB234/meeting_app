@@ -13,6 +13,9 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
   // so, don't change these 'final'
   late UserRepository _userRepo;
   late AuthenticationRepository _authRepo;
+  // ** 중요 로그아웃시 userProvider 는 invalidate() 를 통해 dispose 되어 사라질 예정
+  // 로그인하여 다시 userProvider 를 listen 하게 되면 userProvider 객체는 다시 생성된다.
+  // 이렇게 하여 이전에 로그인한 계정의 정보가 남아있지 않도록 구현하였다. 자세한 설명은 signout_view_model.dart 에 추가.
   @override
   FutureOr<UserProfileModel> build() async {
     _userRepo = ref.read(userRepo);

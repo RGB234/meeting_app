@@ -17,31 +17,35 @@ class ChatRoomRepository {
     return snapshot.docs;
   }
 
-  Future<List<Future<DocumentSnapshot<Map<String, dynamic>>>>>
-      fetchMyChatRoomList(String uid) async {
-    final listOfRoomId = await _db
+  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> fetchMyChatRoomList(
+      String uid) async* {
+    // ** 중요 : 유저가 참여한 방 목록 (joinedRooms) 에서 삭제된 방이 그대로 남아있으면 오류가 발생
+    var stream = _db
         .collection("users")
         .doc(uid)
         .collection("joinedRooms")
         .orderBy("joinedAt", descending: true)
-        .get();
+        .snapshots();
 
-    final processedList = listOfRoomId.docs.map((e) async {
-      final reference = _db.collection("chat_rooms").doc(e.id);
-      final record = await reference.get();
-      return record;
-    }).toList();
+    await for (final query in stream) {
+      final documents = query.docs;
+      final roomIds = documents.map((document) => document.id).toList();
+      final chatRooms = await Future.wait(roomIds
+          .map((id) async => await _db.collection("chat_rooms").doc(id).get())
+          .toList());
 
-    return processedList;
+      yield chatRooms;
+    }
   }
 
-  Future<void> createNewChatRoom(ChatRoomModel chatroom) async {
-    // await _db.collection("chat_rooms").doc().set(chatroom.toJson());
+  Future<void> createNewChatRoom(
+      {required String uid, required ChatRoomModel chatroom}) async {
     final newDocument = _db.collection("chat_rooms").doc();
     // add id field
     chatroom = chatroom.copyWith(id: newDocument.id);
 
     await newDocument.set(chatroom.toJson());
+    joinThisRoom(uid: uid, roomid: newDocument.id);
   }
 
   // update user's joined rooms list & chat_room's joined_users list
