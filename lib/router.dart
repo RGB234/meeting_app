@@ -5,6 +5,7 @@ import 'package:meeting_app/features/authentication/views/signin/signin_screen.d
 import 'package:meeting_app/features/authentication/views/register/register_screen.dart';
 import 'package:meeting_app/features/chat/chat_screen.dart';
 import 'package:meeting_app/features/home/views/home_screen.dart';
+import 'package:meeting_app/features/laboratory/test/riverpod_test_screen.dart';
 import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
 import 'package:meeting_app/features/user_account/views/user_profile_screen.dart';
 
@@ -71,6 +72,11 @@ final routerProvider = Provider((ref) {
         name: VideoScreen.routeName,
         path: VideoScreen.routePath,
         builder: (context, state) => const VideoScreen(),
+      ),
+      GoRoute(
+        name: RiverpodTestScreen.routeName,
+        path: RiverpodTestScreen.routePath,
+        builder: (context, state) => const RiverpodTestScreen(),
       ),
     ],
   );

@@ -52,6 +52,7 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
   }
 
   Future<void> updateProfile(Map<String, dynamic> data) async {
+    state = const AsyncValue.loading();
     await _userRepo.updateProfile(_authRepo.user!.uid, data);
     // refresh
     ref.invalidateSelf();
