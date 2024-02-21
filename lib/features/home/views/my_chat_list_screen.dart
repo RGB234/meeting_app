@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
+import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
 
@@ -131,7 +131,7 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
 
   void _addChatRoom(
       {required String uid, required String title, required int numOfPairs}) {
-    ref.read(chatRoomProvider.notifier).createNewChatRoom(
+    ref.read(lobbyProvider.notifier).createNewChatRoom(
           title: title,
           numOfPairs: numOfPairs,
         );
@@ -154,7 +154,7 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
 
     return Stack(
       children: [
-        ref.watch(myChatRoomProvider(currentUserid)).when(
+        ref.watch(myLobbyProvider(currentUserid)).when(
               data: (data) {
                 return ListView.separated(
                   itemBuilder: (context, index) {

@@ -1,4 +1,4 @@
-class ChatRoomModel {
+class LobbyModel {
   final String id;
   final String image;
   final int numCurrentFemale;
@@ -9,7 +9,7 @@ class ChatRoomModel {
   final String createdAt;
   final String createdBy;
 
-  ChatRoomModel({
+  LobbyModel({
     required this.id,
     required this.image,
     required this.numCurrentFemale,
@@ -21,7 +21,7 @@ class ChatRoomModel {
     required this.createdBy,
   });
 
-  ChatRoomModel.empty()
+  LobbyModel.empty()
       : id = "",
         image = "",
         numCurrentFemale = 0,
@@ -32,7 +32,7 @@ class ChatRoomModel {
         createdAt = "",
         createdBy = "";
 
-  ChatRoomModel.fromJson(Map<String, dynamic> json)
+  LobbyModel.fromJson(Map<String, dynamic> json)
       : id = json["id"],
         image = json["image"],
         numCurrentFemale = json["numCurrentFemale"],
@@ -57,7 +57,7 @@ class ChatRoomModel {
     };
   }
 
-  ChatRoomModel copyWith({
+  LobbyModel copyWith({
     String? id,
     String? image,
     int? numCurrentFemale,
@@ -69,7 +69,7 @@ class ChatRoomModel {
     String? createdAt,
     String? createdBy,
   }) {
-    return ChatRoomModel(
+    return LobbyModel(
       id: id ?? this.id,
       image: image ?? this.image,
       numCurrentFemale: numCurrentFemale ?? this.numCurrentFemale,

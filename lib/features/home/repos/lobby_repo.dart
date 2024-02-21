@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meeting_app/features/home/models/chat_room_model.dart';
+import 'package:meeting_app/features/home/models/lobby_model.dart';
 
-class ChatRoomRepository {
+class LobbyRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
@@ -39,7 +39,7 @@ class ChatRoomRepository {
   }
 
   Future<void> createNewChatRoom(
-      {required String uid, required ChatRoomModel chatroom}) async {
+      {required String uid, required LobbyModel chatroom}) async {
     final newDocument = _db.collection("chat_rooms").doc();
     // add id field
     chatroom = chatroom.copyWith(id: newDocument.id);
@@ -73,4 +73,4 @@ class ChatRoomRepository {
   }
 }
 
-final chatRoomRepo = Provider((ref) => ChatRoomRepository());
+final lobbyRepo = Provider((ref) => LobbyRepository());

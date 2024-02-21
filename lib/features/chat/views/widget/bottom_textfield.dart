@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../constants/sizes.dart';
+import 'package:meeting_app/constants/sizes.dart';
 
 class CustomBottomTextField extends StatelessWidget {
   final TextEditingController _textController = TextEditingController();

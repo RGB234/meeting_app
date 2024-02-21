@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/chat/chat_screen.dart';
-import 'package:meeting_app/features/home/view_models/chat_room_view_model.dart';
+import 'package:meeting_app/features/chat/views/chat_screen.dart';
+import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
 
@@ -130,7 +130,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   }
 
   void _enterThisRoom({required String roomid}) {
-    ref.read(chatRoomProvider.notifier).joinThisRoom(roomid: roomid);
+    ref.read(lobbyProvider.notifier).joinThisRoom(roomid: roomid);
     context.pushNamed(
       ChatScreen.routeName,
       pathParameters: {'chatId': roomid},
@@ -138,7 +138,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   }
 
   void _addChatRoom({required String title, required int numOfPairs}) {
-    ref.read(chatRoomProvider.notifier).createNewChatRoom(
+    ref.read(lobbyProvider.notifier).createNewChatRoom(
           title: title,
           numOfPairs: numOfPairs,
         );
@@ -146,7 +146,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   }
 
   void _refreshList() {
-    ref.read(chatRoomProvider.notifier).refresh();
+    ref.read(lobbyProvider.notifier).refresh();
   }
 
   @override
@@ -154,7 +154,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     final isSignedIn = ref.watch(authRepo).isSignedIn;
     return Stack(
       children: [
-        ref.watch(chatRoomProvider).when(
+        ref.watch(lobbyProvider).when(
               data: (data) {
                 return ListView.separated(
                   itemBuilder: (context, index) {

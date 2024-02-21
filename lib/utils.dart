@@ -63,3 +63,9 @@ class AuthenticationValidator {
     }
   }
 }
+
+class DateTimeFormatUtil {
+  static DateTime now = DateTime.now();
+  static String nowYtoM =
+      "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}";
+}
