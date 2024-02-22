@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/authentication/view_models/register_view_model.dart';
@@ -64,3 +65,18 @@ final userProvider = AsyncNotifierProvider<UserViewModel, UserProfileModel>(
     return UserViewModel();
   },
 );
+
+final userProviderById =
+    AutoDisposeFutureProviderFamily<UserProfileModel, String>((ref, uid) async {
+  final repo = ref.read(userRepo);
+  late UserProfileModel userProfile;
+  final snapshot = await repo.findUserById(uid);
+
+  if (snapshot.exists) {
+    userProfile = UserProfileModel.fromJson(snapshot.data()!);
+  } else {
+    userProfile = UserProfileModel.empty();
+  }
+  debugPrint("몇 번 호출되는지 테스트(userProviderById)");
+  return userProfile;
+});

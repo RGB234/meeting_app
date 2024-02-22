@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/chat/message_model.dart';
 import 'package:meeting_app/features/chat/repos/message_repo.dart';
-import 'package:meeting_app/utils.dart';
 
 class MessageViewModel extends AsyncNotifier<void> {
   late MessageRepository _messageRepo;
@@ -20,13 +18,16 @@ class MessageViewModel extends AsyncNotifier<void> {
   }) async {
     state = const AsyncValue.loading();
 
-    final now = DateTimeFormatUtil.nowYtoM;
-    final currentUserId = ref.read(authRepo).user!.uid;
+    DateTime now = DateTime.now();
+    String nowYtoM =
+        "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}";
+
+    final senderUid = ref.read(authRepo).user!.uid;
 
     AsyncValue.guard(() async {
       final message = MessageModel.fromJson({
-        'createdAt': now,
-        'createdBy': currentUserId,
+        'createdAt': nowYtoM,
+        'createdBy': senderUid,
         'text': text,
       });
       _messageRepo.sendMessage(chatRoomId: chatRoomId, message: message);

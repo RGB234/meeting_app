@@ -32,6 +32,12 @@ class UserRepository {
     final fileURL = await fileRef.getDownloadURL();
     await updateProfile(uid, {"photoURL": fileURL});
   }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> findUserById(
+      String uid) async {
+    final snapshot = await _db.collection("users").doc(uid).get();
+    return snapshot;
+  }
 }
 
 final userRepo = Provider((ref) => UserRepository());

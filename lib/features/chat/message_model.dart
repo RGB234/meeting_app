@@ -2,7 +2,6 @@ class MessageModel {
   final String createdAt;
   final String createdBy;
   final String text;
-
   MessageModel({
     required this.createdAt,
     required this.createdBy,
