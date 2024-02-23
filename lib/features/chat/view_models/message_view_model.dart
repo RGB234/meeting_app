@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/chat/message_model.dart';
+import 'package:meeting_app/features/chat/models/message_model.dart';
 import 'package:meeting_app/features/chat/repos/message_repo.dart';
 
 class MessageViewModel extends AsyncNotifier<void> {
@@ -24,7 +24,7 @@ class MessageViewModel extends AsyncNotifier<void> {
 
     final senderUid = ref.read(authRepo).user!.uid;
 
-    AsyncValue.guard(() async {
+    state = await AsyncValue.guard(() async {
       final message = MessageModel.fromJson({
         'createdAt': nowYtoM,
         'createdBy': senderUid,

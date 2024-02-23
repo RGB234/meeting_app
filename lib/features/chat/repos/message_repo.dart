@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meeting_app/features/chat/message_model.dart';
+import 'package:meeting_app/features/chat/models/message_model.dart';
 
 class MessageRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

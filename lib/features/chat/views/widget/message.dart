@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
-import 'package:meeting_app/features/chat/message_model.dart';
+import 'package:meeting_app/features/chat/models/message_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
 class Message extends ConsumerStatefulWidget {

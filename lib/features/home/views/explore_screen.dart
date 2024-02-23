@@ -130,7 +130,9 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   }
 
   void _enterThisRoom({required String roomid}) {
-    ref.read(lobbyProvider.notifier).joinThisRoom(roomid: roomid);
+    // already joined this room >> just enter this room
+    // not joined this room >> join(update db) & enter this room
+    ref.read(lobbyProvider.notifier).enterThisRoom(roomid: roomid);
     context.pushNamed(
       ChatScreen.routeName,
       pathParameters: {'chatId': roomid},

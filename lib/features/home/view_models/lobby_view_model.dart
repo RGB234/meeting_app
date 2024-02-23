@@ -8,12 +8,13 @@ import 'package:meeting_app/features/home/repos/lobby_repo.dart';
 import 'package:meeting_app/features/user_account/models/user_profile_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
-class ChatRoomViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
+class LobbyViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
   late LobbyRepository _lobbyRepo;
 
   @override
   FutureOr<List<LobbyModel>> build() async {
     _lobbyRepo = ref.read(lobbyRepo);
+
     List<QueryDocumentSnapshot<Map<String, dynamic>>> chatRoomList;
 
     // fetch total list
@@ -56,6 +57,13 @@ class ChatRoomViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
     refresh();
   }
 
+  Future<void> enterThisRoom({required String roomid}) async {
+    // 만약 유저가 이 방에 참가한 상태가 아니라면
+    await joinThisRoom(roomid: roomid);
+    // 이미 이 방에 참가한 상태라면
+    // do nothing
+  }
+
   // update user's joined rooms list & chat_room's joined_users list
   Future<void> joinThisRoom({required String roomid}) async {
     ref
@@ -73,8 +81,8 @@ class ChatRoomViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
 // expose data about the list of all chat rooms
 // and methods related to chatrooms (create, delete, change, join, exit...)
 final lobbyProvider =
-    AsyncNotifierProvider.autoDispose<ChatRoomViewModels, List<LobbyModel>>(
-  () => ChatRoomViewModels(),
+    AsyncNotifierProvider.autoDispose<LobbyViewModels, List<LobbyModel>>(
+  () => LobbyViewModels(),
 );
 
 // expose data about the chat room list a user belongs to
