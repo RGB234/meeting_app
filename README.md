@@ -6,5 +6,5 @@ frontend : flutter
 backend : firebase (Migration scheduled)
 MVVM architecture 
 
-<ERD>
+[ERD] 
 https://www.erdcloud.com/d/NifxLtcRdAHxpkXr8
