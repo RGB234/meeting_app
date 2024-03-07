@@ -11,7 +11,7 @@ class LobbyRepository {
     QuerySnapshot<Map<String, dynamic>> snapshot;
     // fetch total list
     snapshot = await _db
-        .collection("chat_rooms")
+        .collection("rooms")
         .orderBy("createdAt", descending: true)
         .get();
 
@@ -32,7 +32,7 @@ class LobbyRepository {
       final documents = query.docs;
       final roomIds = documents.map((document) => document.id).toList();
       final chatRooms = await Future.wait(roomIds
-          .map((id) async => await _db.collection("chat_rooms").doc(id).get())
+          .map((id) async => await _db.collection("rooms").doc(id).get())
           .toList());
 
       yield chatRooms;
@@ -41,7 +41,7 @@ class LobbyRepository {
 
   Future<QuerySnapshot> membersOf({required String roomid}) async {
     return await _db
-        .collection('chat_rooms')
+        .collection('rooms')
         .doc(roomid)
         .collection('members')
         .get();
@@ -49,7 +49,7 @@ class LobbyRepository {
 
   Future<void> createNewChatRoom(
       {required String uid, required LobbyModel chatroom}) async {
-    final newDocument = _db.collection("chat_rooms").doc();
+    final newDocument = _db.collection("rooms").doc();
     // add id field
     chatroom = chatroom.copyWith(id: newDocument.id);
 
@@ -71,7 +71,7 @@ class LobbyRepository {
 
     // update chat_room
     await _db
-        .collection("chat_rooms")
+        .collection("rooms")
         .doc(roomid)
         .collection("members")
         .doc(uid)
@@ -99,7 +99,7 @@ class LobbyRepository {
   }
 
   Future<void> updateRoomInfo(String roomid, Map<String, dynamic> json) async {
-    await _db.collection('chat_rooms').doc(roomid).update(json);
+    await _db.collection('rooms').doc(roomid).update(json);
   }
 }
 

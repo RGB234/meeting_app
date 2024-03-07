@@ -8,11 +8,8 @@ class MemberRepository {
   Future<List<UserProfileModel>> getListOfMembersIn(
       {required String roomid}) async {
     List<UserProfileModel> members = [];
-    QuerySnapshot<Map<String, dynamic>> snapshot = await _db
-        .collection('chat_rooms')
-        .doc(roomid)
-        .collection('members')
-        .get();
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection('rooms').doc(roomid).collection('members').get();
 
     for (final doc in snapshot.docs) {
       final userId = doc.id;

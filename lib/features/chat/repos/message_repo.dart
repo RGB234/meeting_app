@@ -10,7 +10,7 @@ class MessageRepository {
     required MessageModel message,
   }) async {
     await _db
-        .collection('chat_rooms')
+        .collection('rooms')
         .doc(chatRoomId)
         .collection('messages')
         .doc()
@@ -19,7 +19,7 @@ class MessageRepository {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> loadMessages(chatRoomId) {
     return _db
-        .collection('chat_rooms')
+        .collection('rooms')
         .doc(chatRoomId)
         .collection('messages')
         .orderBy("createdAt")
