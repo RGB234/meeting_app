@@ -1,11 +1,44 @@
-<mxfile host="app.diagrams.net" modified="2024-03-07T02:57:11.637Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="77L6B73KsDsTb5ZoYedu" version="24.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-08T11:45:14.351Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="IdVP4Id6ekel3M-Mkba-" version="24.0.2" type="github">
   <diagram name="페이지-1" id="R3X2M3-pAcKjLp77W0T4">
     <mxGraphModel dx="1050" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="9SrGxSWxUJ_v8hZyUirk-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="60" y="70" width="80" height="80" as="geometry" />
+        <mxCell id="9SrGxSWxUJ_v8hZyUirk-1" value="인증&lt;div&gt;authentication&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="20" y="70" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-2" value="&lt;div&gt;계정&lt;/div&gt;&lt;div&gt;user_account&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="20" y="350" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-3" value="&lt;div&gt;채팅방 내부&lt;/div&gt;&lt;div&gt;chat&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="20" y="610" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-4" value="&lt;div&gt;전체 채팅방 목록&lt;/div&gt;&lt;div&gt;lobby&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="165" y="790" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-5" value="첫 화면&lt;div&gt;home&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="20" y="790" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-6" value="&lt;div&gt;내 채팅방 목록&lt;/div&gt;&lt;div&gt;my_&lt;span style=&quot;background-color: initial;&quot;&gt;lobby&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="165" y="890" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-7" value="&lt;div&gt;로그인&lt;/div&gt;signin" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="180" y="30" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-9" value="&lt;div&gt;로그아웃&lt;/div&gt;signout" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="180" y="90" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-10" value="&lt;div&gt;회원가입register&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="180" y="150" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-12" value="계정 설정&lt;div&gt;&lt;/div&gt;&lt;div&gt;user_profile&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="170" y="280" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-15" value="환경 설정&lt;div&gt;&lt;/div&gt;&lt;div&gt;user_options&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="170" y="370" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aePrKIAzhRh7uTKZdlOW-17" value="계정 삭제&lt;div&gt;user_options&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="170" y="460" width="70" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
