@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
-import 'package:meeting_app/features/home/models/lobby_model.dart';
+import 'package:meeting_app/features/home/models/room_model.dart';
+import 'package:meeting_app/features/home/models/users_rooms_model.dart';
 import 'package:meeting_app/features/home/repos/lobby_repo.dart';
 import 'package:meeting_app/features/user_account/models/user_profile_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
-class LobbyViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
+class LobbyViewModels extends AutoDisposeAsyncNotifier<List<RoomModel>> {
   late LobbyRepository _lobbyRepo;
 
   @override
-  FutureOr<List<LobbyModel>> build() async {
+  FutureOr<List<RoomModel>> build() async {
     _lobbyRepo = ref.read(lobbyRepo);
 
     List<QueryDocumentSnapshot<Map<String, dynamic>>> chatRoomList;
@@ -20,7 +21,7 @@ class LobbyViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
     // fetch total list
     chatRoomList = await _lobbyRepo.fetchChatRoomList();
     return chatRoomList
-        .map((element) => LobbyModel.fromJson(element.data()))
+        .map((element) => RoomModel.fromJson(element.data()))
         .toList();
   }
 
@@ -40,35 +41,38 @@ class LobbyViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
     int numCurrentMale = 0;
     int numCurrentFemale = 0;
 
-    LobbyModel createdChat = LobbyModel.empty();
-    createdChat = createdChat.copyWith(
+    RoomModel chatroom = RoomModel.empty();
+    chatroom = chatroom.copyWith(
       title: title,
       numMaxMale: numOfPairs,
       numMaxFemale: numOfPairs,
       numCurrentMale: numCurrentMale,
       numCurrentFemale: numCurrentFemale,
       createdAt: time,
-      createdBy: userId,
+      hostID: userId,
     );
-    await ref
+
+    final createdRoomId = await ref
         .read(lobbyRepo)
-        .createNewChatRoom(chatroom: createdChat, uid: userId);
-    // await ref.read(lobbyRepo).joinThisRoom(uid: uid, roomid: roomid)
+        .createNewChatRoom(chatroom: chatroom, uid: userId);
+
+    await enterThisRoom(roomID: createdRoomId);
+
     refresh();
   }
 
-  Future<void> enterThisRoom({required String roomid}) async {
-    // 만약 유저가 이 방에 참가한 상태가 아니라면
-    await joinThisRoom(roomid: roomid);
-    // 이미 이 방에 참가한 상태라면
-    // do nothing
-  }
+  Future<void> enterThisRoom({required String roomID}) async {
+    final DateTime now = DateTime.now();
+    final String time =
+        "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}";
 
-  // update user's joined rooms list & chat_room's joined_users list
-  Future<void> joinThisRoom({required String roomid}) async {
-    ref
-        .read(lobbyRepo)
-        .joinThisRoom(uid: ref.read(authRepo).user!.uid, roomid: roomid);
+    final uid = ref.read(authRepo).user!.uid;
+
+    // users_rooms_model
+    final updateInfo =
+        UsersRoomsModel(uid: uid, roomID: roomID, joinedAt: time);
+
+    await ref.read(lobbyRepo).enterThisRoom(updateInfo);
   }
 
   void updateInfo() {}
@@ -81,18 +85,18 @@ class LobbyViewModels extends AutoDisposeAsyncNotifier<List<LobbyModel>> {
 // expose data about the list of all chat rooms
 // and methods related to chatrooms (create, delete, change, join, exit...)
 final lobbyProvider =
-    AsyncNotifierProvider.autoDispose<LobbyViewModels, List<LobbyModel>>(
+    AsyncNotifierProvider.autoDispose<LobbyViewModels, List<RoomModel>>(
   () => LobbyViewModels(),
 );
 
 // expose data about the chat room list a user belongs to
 final myLobbyProvider =
-    StreamProvider.autoDispose.family<List<LobbyModel>, String>(((ref, uid) {
+    StreamProvider.autoDispose.family<List<RoomModel>, String>(((ref, uid) {
   final LobbyRepository repo = ref.read(lobbyRepo);
   // arg >> user id
   final stream = repo.fetchMyChatRoomList(uid);
 
   return stream.map((chatRooms) => chatRooms
-      .map((chatRoom) => LobbyModel.fromJson(chatRoom.data()!))
+      .map((chatRoom) => RoomModel.fromJson(chatRoom.data()!))
       .toList());
 }));

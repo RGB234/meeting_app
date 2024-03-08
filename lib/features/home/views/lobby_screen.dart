@@ -129,13 +129,11 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     );
   }
 
-  void _enterThisRoom({required String roomid}) {
-    // already joined this room >> just enter this room
-    // not joined this room >> join(update db) & enter this room
-    ref.read(lobbyProvider.notifier).enterThisRoom(roomid: roomid);
+  void _enterThisRoom({required String roomID}) {
+    ref.read(lobbyProvider.notifier).enterThisRoom(roomID: roomID);
     context.pushNamed(
       ChatScreen.routeName,
-      pathParameters: {'chatId': roomid},
+      pathParameters: {'chatId': roomID},
     );
   }
 
@@ -166,7 +164,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                           showErrorSnack(context, "로그인이 필요한 서비스입니다.");
                           return;
                         }
-                        _enterThisRoom(roomid: data.elementAt(index).id);
+                        _enterThisRoom(roomID: data.elementAt(index).roomID);
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,

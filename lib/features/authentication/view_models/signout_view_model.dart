@@ -32,7 +32,7 @@ class SignOutViewModel extends AsyncNotifier<void> {
     // invalidate 하지 않을 경우 로그아웃해도 남아있다.
     // 정확히는 userProvider 를 listen 하고 있지 않는 화면에서 invalidate 를 하면
     // 이때는 userProvider 를 listen 하는 리스너가 위젯트리상에 없기 때문에
-    // provider 는 폐기된다. 마찬가지로 provider 가 보관하는 데이터인 state 도 지워진다.
+    // provider 는 폐기되며, provider 가 보관하는 데이터인 state 도 지워진다.
     // 다시 로그인하여 userProvider 를 listen 하는 화면으로 가면 userProvider 객체가 새로 생성된다.
     // userProvider 는 AsyncNotifierProvider 로서, 현재 argument인  _createNotifier 함수로
     // UserViewModel 을 return 하는 함수를 등록한 상태다.

@@ -1,5 +1,5 @@
-class LobbyModel {
-  final String id;
+class RoomModel {
+  final String roomID;
   final String image;
   final int numCurrentFemale;
   final int numCurrentMale;
@@ -7,10 +7,10 @@ class LobbyModel {
   final int numMaxMale;
   final String title;
   final String createdAt;
-  final String createdBy;
+  final String hostID;
 
-  LobbyModel({
-    required this.id,
+  RoomModel({
+    required this.roomID,
     required this.image,
     required this.numCurrentFemale,
     required this.numCurrentMale,
@@ -18,11 +18,11 @@ class LobbyModel {
     required this.numMaxMale,
     required this.title,
     required this.createdAt,
-    required this.createdBy,
+    required this.hostID,
   });
 
-  LobbyModel.empty()
-      : id = "",
+  RoomModel.empty()
+      : roomID = "",
         image = "",
         numCurrentFemale = 0,
         numCurrentMale = 0,
@@ -30,10 +30,10 @@ class LobbyModel {
         numMaxMale = 4,
         title = "",
         createdAt = "",
-        createdBy = "";
+        hostID = "";
 
-  LobbyModel.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
+  RoomModel.fromJson(Map<String, dynamic> json)
+      : roomID = json["roomID"],
         image = json["image"],
         numCurrentFemale = json["numCurrentFemale"],
         numCurrentMale = json["numCurrentMale"],
@@ -41,11 +41,11 @@ class LobbyModel {
         numMaxMale = json["numMaxMale"],
         title = json["title"],
         createdAt = json["createdAt"],
-        createdBy = json["createdBy"];
+        hostID = json["hostID"];
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
+      "roomID": roomID,
       "image": image,
       "numCurrentFemale": numCurrentFemale,
       "numCurrentMale": numCurrentMale,
@@ -53,12 +53,12 @@ class LobbyModel {
       "numMaxMale": numMaxMale,
       "title": title,
       "createdAt": createdAt,
-      "createdBy": createdBy,
+      "hostID": hostID,
     };
   }
 
-  LobbyModel copyWith({
-    String? id,
+  RoomModel copyWith({
+    String? roomID,
     String? image,
     int? numCurrentFemale,
     int? numCurrentMale,
@@ -67,10 +67,10 @@ class LobbyModel {
     String? subtitle,
     String? title,
     String? createdAt,
-    String? createdBy,
+    String? hostID,
   }) {
-    return LobbyModel(
-      id: id ?? this.id,
+    return RoomModel(
+      roomID: roomID ?? this.roomID,
       image: image ?? this.image,
       numCurrentFemale: numCurrentFemale ?? this.numCurrentFemale,
       numCurrentMale: numCurrentMale ?? this.numCurrentMale,
@@ -78,7 +78,7 @@ class LobbyModel {
       numMaxMale: numMaxMale ?? this.numMaxMale,
       title: title ?? this.title,
       createdAt: createdAt ?? this.createdAt,
-      createdBy: createdBy ?? this.createdBy,
+      hostID: hostID ?? this.hostID,
     );
   }
 }
