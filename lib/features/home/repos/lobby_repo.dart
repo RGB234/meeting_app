@@ -18,39 +18,24 @@ class LobbyRepository {
     return snapshot.docs;
   }
 
-  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> fetchMyChatRoomList(
-      String uid) async* {
-    // ** 중요 : 유저가 참여한 방 목록 (joinedRooms) 에서 삭제된 방이 그대로 남아있으면 오류가 발생
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> fetchMyChatRoomList(
+      String uid) async {
+    final data = await _db
+        .collection('users_rooms')
+        .orderBy('joinedAt', descending: true)
+        .get();
 
-    // var stream = _db
-    //     .collection("users")
-    //     .doc(uid)
-    //     .collection("joinedRooms")
-    //     .orderBy("joinedAt", descending: true)
-    //     .snapshots();
-
-    // await for (final query in stream) {
-    //   final documents = query.docs;
-    //   final roomIds = documents.map((document) => document.id).toList();
-    //   final chatRooms = await Future.wait(roomIds
-    //       .map((id) async => await _db.collection("rooms").doc(id).get())
-    //       .toList());
-
-    //   yield chatRooms;
-    // }
-
-    final snapshots = _db.collection('users_rooms').snapshots();
-    await for (final snapshot in snapshots) {
-      final roomIds = snapshot.docs.map((element) {
-        if (element.data()['uid'] == uid) return element.data()['roomID'];
-      }).toList();
-
-      final chatRooms = await Future.wait(roomIds
-          .map((id) async => await _db.collection("rooms").doc(id).get())
-          .toList());
-
-      yield chatRooms;
+    List<String> roomIDs = [];
+    for (final row in data.docs) {
+      if (row.data()['uid'] == uid) {
+        roomIDs.add(row.data()['roomID']);
+      }
     }
+    final chatRooms = await Future.wait(roomIDs
+        .map((id) async => await _db.collection("rooms").doc(id).get())
+        .toList());
+
+    return chatRooms;
   }
 
   Future<String> createNewChatRoom({
@@ -66,31 +51,35 @@ class LobbyRepository {
     return newDocument.id;
   }
 
-  // update user's joined rooms list & chat_room's joined_users list
-  Future<void> enterThisRoom(UsersRoomsModel updateInfo) async {
-    // MemberRepository memberRepo = MemberRepository();
-    final roomID = updateInfo.roomID;
-    late Map<String, dynamic> json;
-
-    late List<int> count;
-
-    // update users_rooms table
-    await _db.collection("users_rooms").doc().set(updateInfo.toJson());
-
-    // update count of members
-    // count = await memberRepo.countMembers(roomID: roomID);
-    count = [0, 0];
-
-    json = {
-      'numCurrentMale': count[0],
-      'numCurrentFemale': count[1],
-    };
-
-    updateRoomInfo(roomID, json);
+  Future<bool> findUserInThisRoom(
+      {required String uid, required String roomID}) async {
+    final rows = await _db.collection('users_rooms').get();
+    for (final row in rows.docs) {
+      if (row.data()['roomID'] == roomID && row.data()['uid'] == uid) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  Future<void> updateRoomInfo(String roomid, Map<String, dynamic> json) async {
-    await _db.collection('rooms').doc(roomid).update(json);
+  // update user's joined rooms list & chat_room's joined_users list
+  Future<void> enterThisRoom(UsersRoomsModel updateInfo) async {
+    // -- new member --
+    // update users_rooms table
+    await _db.collection("users_rooms").doc().set(updateInfo.toJson());
+  }
+
+  Future<void> updateRoomInfo(String roomID, Map<String, dynamic> json) async {
+    await _db.collection('rooms').doc(roomID).update(json);
+  }
+
+  Future<RoomModel> getRoomInfo(String roomID) async {
+    final room = await _db.collection('rooms').doc(roomID).get();
+    if (room.data() == null) {
+      return RoomModel.empty();
+    }
+
+    return RoomModel.fromJson(room.data()!);
   }
 }
 

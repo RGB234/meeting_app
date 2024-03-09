@@ -7,6 +7,7 @@ import 'package:meeting_app/features/home/models/room_model.dart';
 import 'package:meeting_app/features/home/models/users_rooms_model.dart';
 import 'package:meeting_app/features/home/repos/lobby_repo.dart';
 import 'package:meeting_app/features/user_account/models/user_profile_model.dart';
+import 'package:meeting_app/features/user_account/repos/user_repo.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
 class LobbyViewModels extends AutoDisposeAsyncNotifier<List<RoomModel>> {
@@ -34,8 +35,7 @@ class LobbyViewModels extends AutoDisposeAsyncNotifier<List<RoomModel>> {
   }) async {
     final UserProfileModel user = ref.read(userProvider).value!;
     final DateTime now = DateTime.now();
-    final String time =
-        "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}";
+    final String time = now.toString();
 
     final userId = user.uid;
     int numCurrentMale = 0;
@@ -56,26 +56,78 @@ class LobbyViewModels extends AutoDisposeAsyncNotifier<List<RoomModel>> {
         .read(lobbyRepo)
         .createNewChatRoom(chatroom: chatroom, uid: userId);
 
-    await enterThisRoom(roomID: createdRoomId);
+    await enterThisRoom(roomID: createdRoomId, authority: "host");
 
     refresh();
   }
 
-  Future<void> enterThisRoom({required String roomID}) async {
-    final DateTime now = DateTime.now();
-    final String time =
-        "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}";
-
+  Future<void> enterThisRoom({
+    required String roomID,
+    String authority = "guest",
+  }) async {
     final uid = ref.read(authRepo).user!.uid;
+    final exist = await _lobbyRepo.findUserInThisRoom(uid: uid, roomID: roomID);
+    // -- user already exits in this room --
+    if (exist) {
+      return;
+    }
 
-    // users_rooms_model
-    final updateInfo =
-        UsersRoomsModel(uid: uid, roomID: roomID, joinedAt: time);
+    // -- user entered this room as a new member --
+    final DateTime now = DateTime.now();
+    final String time = now.toString();
 
-    await ref.read(lobbyRepo).enterThisRoom(updateInfo);
+    final updateInfo = UsersRoomsModel(
+        uid: uid, roomID: roomID, joinedAt: time, authority: authority);
+
+    await _lobbyRepo.enterThisRoom(updateInfo);
+
+    // -- update count of Male/Female --
+    final roomInfo = await _lobbyRepo.getRoomInfo(roomID);
+
+    final snapshot = await ref.read(userRepo).findUserById(uid);
+    // user is already login-state. can't be null
+    final user = UserProfileModel.fromJson(snapshot.data()!);
+
+    Map<String, dynamic> json;
+    if (user.gender == 'male') {
+      json = {
+        'numCurrentMale': roomInfo.numCurrentMale + 1,
+      };
+    } else if (user.gender == 'femlae') {
+      json = {
+        'numCurrentFemale': roomInfo.numCurrentFemale + 1,
+      };
+    } else {
+      json = {
+        'numCurrentFemale': roomInfo.numCurrentFemale + 1,
+      };
+    }
+
+    await ref.read(lobbyRepo).updateRoomInfo(roomID, json);
+
+    ref.invalidate(myLobbyProvider);
   }
 
   void updateInfo() {}
+
+  void refresh() {
+    ref.invalidateSelf();
+  }
+}
+
+class MyLobbyViewModels
+    extends AutoDisposeFamilyAsyncNotifier<List<RoomModel>, String> {
+  late LobbyRepository _lobbyRepo;
+  @override
+  FutureOr<List<RoomModel>> build(String arg) async {
+    _lobbyRepo = ref.read(lobbyRepo);
+    // arg >> user id
+    final myChatRooms = await _lobbyRepo.fetchMyChatRoomList(arg);
+
+    return myChatRooms
+        .map((chatroom) => RoomModel.fromJson(chatroom.data()!))
+        .toList();
+  }
 
   void refresh() {
     ref.invalidateSelf();
@@ -89,14 +141,30 @@ final lobbyProvider =
   () => LobbyViewModels(),
 );
 
-// expose data about the chat room list a user belongs to
-final myLobbyProvider =
-    StreamProvider.autoDispose.family<List<RoomModel>, String>(((ref, uid) {
-  final LobbyRepository repo = ref.read(lobbyRepo);
-  // arg >> user id
-  final stream = repo.fetchMyChatRoomList(uid);
+final myLobbyProvider = AsyncNotifierProvider.autoDispose
+    .family<MyLobbyViewModels, List<RoomModel>, String>(
+  () => MyLobbyViewModels(),
+);
 
-  return stream.map((chatRooms) => chatRooms
-      .map((chatRoom) => RoomModel.fromJson(chatRoom.data()!))
-      .toList());
-}));
+// expose data about the chat room list a user belongs to
+// final myLobbyProvider =
+//     StreamProvider.autoDispose.family<List<RoomModel>, String>(((ref, uid) {
+//   final LobbyRepository repo = ref.read(lobbyRepo);
+//   // arg >> user id
+//   final stream = repo.fetchMyChatRoomList(uid);
+
+//   return stream.map((chatRooms) => chatRooms
+//       .map((chatRoom) => RoomModel.fromJson(chatRoom.data()!))
+//       .toList());
+// }));
+
+// final myLobbyProvider = FutureProvider.autoDispose
+//     .family<List<RoomModel>, String>(((ref, uid) async {
+//   final LobbyRepository repo = ref.read(lobbyRepo);
+//   // arg >> user id
+//   final myChatRooms = await repo.fetchMyChatRoomList(uid);
+
+//   return myChatRooms
+//       .map((chatroom) => RoomModel.fromJson(chatroom.data()!))
+//       .toList();
+// }));

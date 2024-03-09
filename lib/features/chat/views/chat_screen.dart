@@ -86,13 +86,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               width: screenSize.width,
               bottom: 0,
               child: Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border(
                     top: BorderSide(
-                      color: Colors.black,
-                      width: 0.5,
+                      color: Colors.black45,
+                      width: 1,
                     ),
                   ),
                 ),
@@ -115,25 +115,26 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                             fontSize: Sizes.size16,
                           ),
                           decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: _emptyInput,
+                              icon: const Icon(FontAwesomeIcons.xmark),
+                              iconSize: Sizes.size20,
+                            ),
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: Sizes.size4,
-                              horizontal: Sizes.size10,
-                            ),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                Sizes.size12, Sizes.size12, 0, Sizes.size8),
                           ),
                         ),
                       ),
                       IconButton(
-                        onPressed: _emptyInput,
-                        icon: const Icon(FontAwesomeIcons.xmark),
-                      ),
-                      IconButton(
                         onPressed: _sendMessage,
                         icon: const Icon(FontAwesomeIcons.arrowLeft),
+                        iconSize: Sizes.size20,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ],
                   ),

@@ -5,16 +5,27 @@ import 'package:meeting_app/features/chat/models/message_model.dart';
 class MessageRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> sendMessage({
-    required String chatRoomId,
+  Future<String> sendMessage({
+    required String roomID,
     required MessageModel message,
   }) async {
+    final newDocument =
+        _db.collection('rooms').doc(roomID).collection('messages').doc();
+    await newDocument.set(message.toJson());
+
+    return newDocument.id;
+  }
+
+  Future<void> updateMessageInfo(
+      {required String roomID,
+      required String messageID,
+      required MessageModel newMessageInfo}) async {
     await _db
         .collection('rooms')
-        .doc(chatRoomId)
+        .doc(roomID)
         .collection('messages')
-        .doc()
-        .set(message.toJson());
+        .doc(messageID)
+        .update(newMessageInfo.toJson());
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> loadMessages(chatRoomId) {

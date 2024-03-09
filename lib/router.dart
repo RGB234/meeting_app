@@ -13,15 +13,15 @@ final routerProvider = Provider((ref) {
   // rebuild when authState has been changed;
   ref.watch(authState);
   return GoRouter(
-    initialLocation: "/explore",
+    initialLocation: "/lobby",
     redirect: (context, state) {
       final location = state.matchedLocation;
       final isSignedIn = ref.watch(authRepo).isSignedIn;
       // exception handling for route "/";
-      if (location == "/") return "/explore";
+      if (location == "/") return "/lobby";
 
       if (!isSignedIn) {
-        if (location != "/explore") {
+        if (location != "/lobby") {
           if (location == SigninScreen.routePath ||
               location == RegisterScreen.routePath) {
             return null;
@@ -46,7 +46,7 @@ final routerProvider = Provider((ref) {
       ),
       GoRoute(
         name: HomeScreen.routeName,
-        path: "/:tab(home|chat|explore|likes)",
+        path: "/:tab(home|myLobby|lobby|likes)",
         builder: (context, state) {
           final tab = state.pathParameters['tab']!;
           return HomeScreen(

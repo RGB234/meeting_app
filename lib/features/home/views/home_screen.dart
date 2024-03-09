@@ -14,7 +14,7 @@ import 'package:meeting_app/features/home/views/my_lobby_screen.dart';
 import 'package:meeting_app/features/home/views/widgets/sidebar_menu.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  static String routePath = "/:tab(home|chat|explore|likes)";
+  static String routePath = "/:tab(home|myLobby|lobby|likes)";
   static String routeName = "home";
   final String tab;
   const HomeScreen({
@@ -27,7 +27,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  final List<String> _tabOpt = ["home", "chat", "explore", 'likes'];
+  final List<String> _tabOpt = ["home", "myLobby", "lobby", 'likes'];
   late int _selectedIndex = _tabOpt.indexOf(widget.tab);
 
   void _onSwitchIndexTap(int value) {
@@ -124,12 +124,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // Chat
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.comment),
-            label: "Chat",
+            label: "MyLobby",
           ),
           // Explore
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.magnifyingGlass),
-            label: "Explore",
+            label: "Lobby",
           ),
           // Likes
           BottomNavigationBarItem(

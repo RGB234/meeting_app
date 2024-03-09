@@ -4,6 +4,7 @@ import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/views/signin/signin_screen.dart';
 import 'package:meeting_app/features/authentication/views/widgets/auth_btn.dart';
+import 'package:meeting_app/features/home/views/home_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   static String routePath = "/Register";
@@ -13,6 +14,13 @@ class RegisterScreen extends StatelessWidget {
   void _onSigninTap(BuildContext context) {
     context.replaceNamed(
       SigninScreen.routeName,
+    );
+  }
+
+  void _goHomeScreen(BuildContext context) {
+    context.goNamed(
+      HomeScreen.routeName,
+      pathParameters: {'tab': 'lobby'},
     );
   }
 
@@ -55,7 +63,17 @@ class RegisterScreen extends StatelessWidget {
                       color: Colors.red,
                     ),
                   ),
-                )
+                ),
+                Gaps.v40,
+                TextButton(
+                  onPressed: () => _goHomeScreen(context),
+                  child: const Text(
+                    "메인 화면으로 돌아가기",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

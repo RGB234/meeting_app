@@ -18,19 +18,29 @@ class MessageViewModel extends AsyncNotifier<void> {
   }) async {
     state = const AsyncValue.loading();
 
-    DateTime now = DateTime.now();
-    String nowYtoM =
-        "${now.year}:${now.month}:${now.day}:${now.hour}:${now.minute}";
+    DateTime datetimeNow = DateTime.now();
+    final now = datetimeNow.toString();
 
     final senderUid = ref.read(authRepo).user!.uid;
 
     state = await AsyncValue.guard(() async {
       final message = MessageModel.fromJson({
-        'createdAt': nowYtoM,
+        // messageID should be updated after _messageRepo.sendMessage
+        'messageID': "",
+        'roomID': chatRoomId,
+        'createdAt': now,
         'createdBy': senderUid,
         'text': text,
+        'deleted': false,
       });
-      _messageRepo.sendMessage(chatRoomId: chatRoomId, message: message);
+      final messageID =
+          await _messageRepo.sendMessage(roomID: chatRoomId, message: message);
+
+      // update messageID field
+      final msg = message.copyWith(messageID: messageID);
+
+      await _messageRepo.updateMessageInfo(
+          roomID: chatRoomId, messageID: messageID, newMessageInfo: msg);
     });
   }
 }

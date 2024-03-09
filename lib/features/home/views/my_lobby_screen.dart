@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
+import 'package:meeting_app/features/chat/views/chat_screen.dart';
 import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 import 'package:meeting_app/utils.dart';
@@ -129,6 +131,14 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
     );
   }
 
+  void _enterThisRoom({required String roomID}) {
+    ref.read(lobbyProvider.notifier).enterThisRoom(roomID: roomID);
+    context.pushNamed(
+      ChatScreen.routeName,
+      pathParameters: {'chatId': roomID},
+    );
+  }
+
   void _addChatRoom(
       {required String uid, required String title, required int numOfPairs}) {
     ref.read(lobbyProvider.notifier).createNewChatRoom(
@@ -136,6 +146,10 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
           numOfPairs: numOfPairs,
         );
     Navigator.of(context).pop();
+  }
+
+  void _refreshList(String uid) {
+    ref.read(myLobbyProvider(uid).notifier).refresh();
   }
 
   @override
@@ -164,6 +178,7 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
                           showErrorSnack(context, "로그인이 필요한 서비스입니다.");
                           return;
                         }
+                        _enterThisRoom(roomID: data.elementAt(index).roomID);
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,6 +233,13 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              IconButton(
+                onPressed: () {
+                  _refreshList(currentUserid);
+                },
+                icon: const Icon(Icons.refresh_outlined),
+                iconSize: Sizes.size28,
+              ),
               IconButton(
                 onPressed: () {
                   _showChatRoomPopup(uid: currentUserid);
