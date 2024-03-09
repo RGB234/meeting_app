@@ -1,9 +1,12 @@
-<mxfile host="app.diagrams.net" modified="2024-03-08T11:58:10.968Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="wN9o0FU-UAABNV9wDwlR" version="24.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-09T12:28:12.072Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="iWdA2Sm3OD7tNWhvUaYO" version="24.0.3" type="github">
   <diagram name="페이지-1" id="R3X2M3-pAcKjLp77W0T4">
     <mxGraphModel dx="1050" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="u7Ux2kxzC6DYL-uHv_Bl-3" value="" style="rounded=1;whiteSpace=wrap;html=1;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="92.5" y="822.5" width="217.5" height="112.5" as="geometry" />
+        </mxCell>
         <mxCell id="9SrGxSWxUJ_v8hZyUirk-1" value="인증&lt;div&gt;authentication&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="20" y="30" width="90" height="90" as="geometry" />
         </mxCell>
@@ -40,17 +43,20 @@
         <mxCell id="aePrKIAzhRh7uTKZdlOW-17" value="계정 삭제&lt;div&gt;user_settings&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="165" y="460" width="70" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="PC-SjVzEcOUZYH48-COz-1" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;생성, 삭제&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;create_delete&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
-          <mxGeometry x="320" y="790" width="80" height="80" as="geometry" />
+        <mxCell id="PC-SjVzEcOUZYH48-COz-1" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;생성, 삭제&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;create_delete&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="290" y="790" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="PC-SjVzEcOUZYH48-COz-2" value="입장, 퇴장&lt;div&gt;enter_exit&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
-          <mxGeometry x="320" y="880" width="80" height="80" as="geometry" />
+        <mxCell id="PC-SjVzEcOUZYH48-COz-2" value="입장, 퇴장&lt;div&gt;enter_exit&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="290" y="880" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="PC-SjVzEcOUZYH48-COz-7" value="&lt;div&gt;메세지&lt;/div&gt;&lt;div&gt;messages&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="PC-SjVzEcOUZYH48-COz-7" value="&lt;div&gt;메세지&lt;/div&gt;&lt;div&gt;messages&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="160" y="585" width="75" height="75" as="geometry" />
         </mxCell>
-        <mxCell id="PC-SjVzEcOUZYH48-COz-9" value="&lt;div&gt;설정&lt;/div&gt;&lt;div&gt;settings&lt;/div&gt;&lt;div&gt;(host 권한)&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="PC-SjVzEcOUZYH48-COz-9" value="&lt;div&gt;설정&lt;/div&gt;&lt;div&gt;settings&lt;/div&gt;&lt;div&gt;(host 권한)&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="160" y="670" width="75" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="u7Ux2kxzC6DYL-uHv_Bl-1" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;생성,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;삭제&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="290" y="585" width="40" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
