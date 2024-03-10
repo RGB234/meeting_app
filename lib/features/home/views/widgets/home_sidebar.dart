@@ -36,8 +36,8 @@ Widget buildMenuItems(BuildContext context) => SafeArea(
       ),
     );
 
-class SideBarMenu extends StatelessWidget {
-  const SideBarMenu({super.key});
+class HomeSideBar extends StatelessWidget {
+  const HomeSideBar({super.key});
 
   @override
   Widget build(BuildContext context) {

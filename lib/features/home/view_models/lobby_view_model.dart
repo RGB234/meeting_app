@@ -10,7 +10,7 @@ import 'package:meeting_app/features/user_account/models/user_profile_model.dart
 import 'package:meeting_app/features/user_account/repos/user_repo.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
-class LobbyViewModels extends AutoDisposeAsyncNotifier<List<RoomModel>> {
+class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
   late LobbyRepository _lobbyRepo;
 
   @override
@@ -115,7 +115,7 @@ class LobbyViewModels extends AutoDisposeAsyncNotifier<List<RoomModel>> {
   }
 }
 
-class MyLobbyViewModels
+class MyLobbyViewModel
     extends AutoDisposeFamilyAsyncNotifier<List<RoomModel>, String> {
   late LobbyRepository _lobbyRepo;
   @override
@@ -137,34 +137,11 @@ class MyLobbyViewModels
 // expose data about the list of all chat rooms
 // and methods related to chatrooms (create, delete, change, join, exit...)
 final lobbyProvider =
-    AsyncNotifierProvider.autoDispose<LobbyViewModels, List<RoomModel>>(
-  () => LobbyViewModels(),
+    AsyncNotifierProvider.autoDispose<LobbyViewModel, List<RoomModel>>(
+  () => LobbyViewModel(),
 );
 
 final myLobbyProvider = AsyncNotifierProvider.autoDispose
-    .family<MyLobbyViewModels, List<RoomModel>, String>(
-  () => MyLobbyViewModels(),
+    .family<MyLobbyViewModel, List<RoomModel>, String>(
+  () => MyLobbyViewModel(),
 );
-
-// expose data about the chat room list a user belongs to
-// final myLobbyProvider =
-//     StreamProvider.autoDispose.family<List<RoomModel>, String>(((ref, uid) {
-//   final LobbyRepository repo = ref.read(lobbyRepo);
-//   // arg >> user id
-//   final stream = repo.fetchMyChatRoomList(uid);
-
-//   return stream.map((chatRooms) => chatRooms
-//       .map((chatRoom) => RoomModel.fromJson(chatRoom.data()!))
-//       .toList());
-// }));
-
-// final myLobbyProvider = FutureProvider.autoDispose
-//     .family<List<RoomModel>, String>(((ref, uid) async {
-//   final LobbyRepository repo = ref.read(lobbyRepo);
-//   // arg >> user id
-//   final myChatRooms = await repo.fetchMyChatRoomList(uid);
-
-//   return myChatRooms
-//       .map((chatroom) => RoomModel.fromJson(chatroom.data()!))
-//       .toList();
-// }));

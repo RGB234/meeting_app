@@ -11,7 +11,7 @@ import 'package:meeting_app/features/authentication/view_models/register_view_mo
 import 'package:meeting_app/features/authentication/view_models/signout_view_model.dart';
 import 'package:meeting_app/features/home/views/lobby_screen.dart';
 import 'package:meeting_app/features/home/views/my_lobby_screen.dart';
-import 'package:meeting_app/features/home/views/widgets/sidebar_menu.dart';
+import 'package:meeting_app/features/home/views/widgets/home_sidebar.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static String routePath = "/:tab(home|myLobby|lobby|likes)";
@@ -104,7 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 )
         ],
       ),
-      drawer: const SideBarMenu(),
+      drawer: const HomeSideBar(),
       bottomNavigationBar: CupertinoTabBar(
         // height: Sizes.size60,
         // border: const Border(top: BorderSide(width: 0)),

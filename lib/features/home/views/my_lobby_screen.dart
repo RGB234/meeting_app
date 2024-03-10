@@ -135,7 +135,7 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
     ref.read(lobbyProvider.notifier).enterThisRoom(roomID: roomID);
     context.pushNamed(
       ChatScreen.routeName,
-      pathParameters: {'chatId': roomID},
+      pathParameters: {'roomID': roomID},
     );
   }
 

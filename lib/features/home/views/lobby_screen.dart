@@ -133,7 +133,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     ref.read(lobbyProvider.notifier).enterThisRoom(roomID: roomID);
     context.pushNamed(
       ChatScreen.routeName,
-      pathParameters: {'chatId': roomID},
+      pathParameters: {'roomID': roomID},
     );
   }
 

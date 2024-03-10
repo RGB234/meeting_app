@@ -58,8 +58,8 @@ final routerProvider = Provider((ref) {
         name: ChatScreen.routeName,
         path: ChatScreen.routePath,
         builder: (context, state) {
-          final chatId = state.pathParameters['chatId']!;
-          return ChatScreen(chatId: chatId);
+          final roomID = state.pathParameters['roomID']!;
+          return ChatScreen(roomID: roomID);
         },
       ),
       GoRoute(

@@ -6,13 +6,16 @@ import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/chat/view_models/message_view_model.dart';
 import 'package:meeting_app/features/chat/views/widget/message.dart';
+import 'package:meeting_app/features/home/models/room_model.dart';
+import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
+import 'package:meeting_app/features/home/view_models/room_view_model.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   static const routeName = "chatroom";
-  static const routePath = "/chat/:chatId";
-  final String chatId;
+  static const routePath = "/chat/:roomID";
+  final String roomID;
 
-  const ChatScreen({super.key, required this.chatId});
+  const ChatScreen({super.key, required this.roomID});
 
   @override
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
@@ -31,7 +34,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   void _sendMessage() {
     ref.read(messageProvider.notifier).sendMessage(
-          chatRoomId: widget.chatId,
+          chatRoomId: widget.roomID,
           text: _textController.text,
         );
     _textController.clear();
@@ -43,10 +46,37 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text(
+            ref.watch(roomProvider(widget.roomID)).when(
+                data: (data) {
+                  return data.title;
+                },
+                error: (error, stackTrace) => error.toString(),
+                loading: () => "..."),
+            style: TextStyle(
+              // fontFamily: 'Telma',
+              fontWeight: FontWeight.w500,
+              fontSize: Sizes.size20,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () => {},
+              tooltip: "채팅방 설정",
+              icon: const Icon(FontAwesomeIcons.screwdriverWrench),
+            ),
+            IconButton(
+              onPressed: () => {},
+              tooltip: "채팅방 나가기",
+              icon: const Icon(FontAwesomeIcons.rightFromBracket),
+            ),
+          ],
+        ),
         body: Stack(
           children: [
-            ref.watch(messageStreamProvider(widget.chatId)).when(
+            ref.watch(messageStreamProvider(widget.roomID)).when(
                   data: (data) {
                     return ListView.separated(
                       scrollDirection: Axis.vertical,
