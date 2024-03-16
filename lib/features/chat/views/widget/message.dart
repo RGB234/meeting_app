@@ -3,15 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/chat/models/message_model.dart';
+import 'package:meeting_app/features/chat/view_models/message_view_model.dart';
 import 'package:meeting_app/features/user_account/view_models/user_view_model.dart';
 
 class Message extends ConsumerStatefulWidget {
   final bool isMyMessage;
+  final bool isDeleted;
   final MessageModel message;
 
   const Message({
     super.key,
     required this.message,
+    this.isDeleted = false,
     this.isMyMessage = false,
   });
 
@@ -20,6 +23,13 @@ class Message extends ConsumerStatefulWidget {
 }
 
 class _MessageState extends ConsumerState<Message> {
+  Future<void> _deleteMessage(
+      {required String chatRoomID, required String messageID}) async {
+    ref
+        .read(messageProvider.notifier)
+        .deleteMessage(chatRoomID: chatRoomID, messageID: messageID);
+  }
+
   @override
   Widget build(BuildContext context) {
     final messageBoxWidth = MediaQuery.of(context).size.width * 0.6;
@@ -42,16 +52,72 @@ class _MessageState extends ConsumerState<Message> {
                           children: [
                             Text(sender.username),
                             Gaps.v8,
-                            Container(
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade300,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(Sizes.size10),
-                                child: Text(
-                                  widget.message.text,
+                            GestureDetector(
+                              onLongPress: () {
+                                if (!widget.isDeleted) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              Sizes.size10),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const Text("메시지를 삭제하시겠습니까?"),
+                                              Gaps.v12,
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        _deleteMessage(
+                                                            chatRoomID: widget
+                                                                .message.roomID,
+                                                            messageID: widget
+                                                                .message
+                                                                .messageID);
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: const Text("예")),
+                                                  TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.of(context)
+                                                              .pop(),
+                                                      child: const Text("아니요")),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: Container(
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade300,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(Sizes.size10),
+                                  child: widget.isDeleted
+                                      ? const Text(
+                                          "삭제된 메시지입니다",
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )
+                                      : Text(
+                                          widget.message.text,
+                                        ),
                                 ),
                               ),
                             )
@@ -91,9 +157,14 @@ class _MessageState extends ConsumerState<Message> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(Sizes.size10),
-                                child: Text(
-                                  widget.message.text,
-                                ),
+                                child: widget.isDeleted
+                                    ? const Text(
+                                        "삭제된 메시지입니다",
+                                        style: TextStyle(color: Colors.black54),
+                                      )
+                                    : Text(
+                                        widget.message.text,
+                                      ),
                               ),
                             )
                           ],

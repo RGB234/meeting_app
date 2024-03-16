@@ -28,6 +28,16 @@ class MessageRepository {
         .update(newMessageInfo.toJson());
   }
 
+  Future<void> deleteMessage(
+      {required String roomID, required String messageID}) async {
+    await _db
+        .collection('rooms')
+        .doc(roomID)
+        .collection('messages')
+        .doc(messageID)
+        .update({'deleted': true});
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> loadMessages(chatRoomId) {
     return _db
         .collection('rooms')

@@ -43,6 +43,10 @@ class MessageViewModel extends AsyncNotifier<void> {
           roomID: chatRoomId, messageID: messageID, newMessageInfo: msg);
     });
   }
+
+  Future<void> deleteMessage({required chatRoomID, required messageID}) async {
+    await _messageRepo.deleteMessage(roomID: chatRoomID, messageID: messageID);
+  }
 }
 
 final messageProvider = AsyncNotifierProvider<MessageViewModel, void>(

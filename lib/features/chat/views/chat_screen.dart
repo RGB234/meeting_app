@@ -7,7 +7,6 @@ import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/chat/view_models/message_view_model.dart';
 import 'package:meeting_app/features/chat/views/widget/message.dart';
-import 'package:meeting_app/features/home/models/room_model.dart';
 import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
 import 'package:meeting_app/features/home/view_models/room_view_model.dart';
 
@@ -98,6 +97,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           message: data.elementAt(index),
                           isMyMessage: data.elementAt(index).createdBy ==
                               ref.read(authRepo).user!.uid,
+                          isDeleted: data.elementAt(index).deleted,
                         );
                       },
                       separatorBuilder: (context, index) => Gaps.v48,
