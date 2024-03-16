@@ -220,9 +220,12 @@ class _MyChatListScreenState extends ConsumerState<MyChatListScreen> {
                   itemCount: data.length,
                 );
               },
-              error: (error, stackTrace) => Center(
-                child: Text(error.toString()),
-              ),
+              error: (error, stackTrace) {
+                debugPrint(stackTrace.toString());
+                return Center(
+                  child: Text(error.toString()),
+                );
+              },
               loading: () => const Center(
                 child: CircularProgressIndicator.adaptive(),
               ),

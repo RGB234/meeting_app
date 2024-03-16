@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
@@ -40,6 +41,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     _textController.clear();
   }
 
+  void _exit({required String roomID}) {
+    ref.read(lobbyProvider.notifier).exitThisRoom(roomID: roomID);
+    context.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -68,7 +74,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               icon: const Icon(FontAwesomeIcons.screwdriverWrench),
             ),
             IconButton(
-              onPressed: () => {},
+              onPressed: () => _exit(roomID: widget.roomID),
               tooltip: "채팅방 나가기",
               icon: const Icon(FontAwesomeIcons.rightFromBracket),
             ),

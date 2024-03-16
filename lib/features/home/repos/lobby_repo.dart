@@ -69,6 +69,30 @@ class LobbyRepository {
     await _db.collection("users_rooms").doc().set(updateInfo.toJson());
   }
 
+  Future<void> exitThisRoom({required uid, required roomID}) async {
+    final rows = await _db.collection('users_rooms').get();
+    late final String thisDocumentID;
+    for (final row in rows.docs) {
+      if (row.data()['roomID'] == roomID && row.data()['uid'] == uid) {
+        thisDocumentID = row.id;
+      }
+    }
+    await _db.collection('users_rooms').doc(thisDocumentID).delete();
+  }
+
+  Future<void> deleteThisRoom({required roomID}) async {
+    final rows = await _db.collection('users_rooms').get();
+    for (final row in rows.docs) {
+      // when one or more users remain in this room
+      // do nothing
+      if (row.data()['roomID'] == roomID) {
+        throw Exception(
+            "one or more users remain in this room. failed to delete(close) this room");
+      }
+    }
+    await _db.collection('rooms').doc(roomID).delete();
+  }
+
   Future<void> updateRoomInfo(String roomID, Map<String, dynamic> json) async {
     await _db.collection('rooms').doc(roomID).update(json);
   }

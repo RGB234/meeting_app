@@ -12,10 +12,12 @@ import 'package:meeting_app/features/user_account/view_models/user_view_model.da
 
 class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
   late LobbyRepository _lobbyRepo;
+  late String uid;
 
   @override
   FutureOr<List<RoomModel>> build() async {
     _lobbyRepo = ref.read(lobbyRepo);
+    uid = ref.read(authRepo).user!.uid;
 
     List<QueryDocumentSnapshot<Map<String, dynamic>>> chatRoomList;
 
@@ -65,7 +67,6 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
     required String roomID,
     String authority = "guest",
   }) async {
-    final uid = ref.read(authRepo).user!.uid;
     final exist = await _lobbyRepo.findUserInThisRoom(uid: uid, roomID: roomID);
     // -- user already exits in this room --
     if (exist) {
@@ -93,7 +94,7 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
       json = {
         'numCurrentMale': roomInfo.numCurrentMale + 1,
       };
-    } else if (user.gender == 'femlae') {
+    } else if (user.gender == 'female') {
       json = {
         'numCurrentFemale': roomInfo.numCurrentFemale + 1,
       };
@@ -105,6 +106,43 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
 
     await ref.read(lobbyRepo).updateRoomInfo(roomID, json);
 
+    ref.invalidateSelf();
+    ref.invalidate(myLobbyProvider);
+  }
+
+  Future<void> exitThisRoom({required String roomID}) async {
+    // -- update count of Male/Female --
+    final roomInfo = await _lobbyRepo.getRoomInfo(roomID);
+
+    final snapshot = await ref.read(userRepo).findUserById(uid);
+    // user is already login-state. can't be null
+    final user = UserProfileModel.fromJson(snapshot.data()!);
+
+    Map<String, dynamic> json;
+    if (user.gender == 'male') {
+      json = {
+        'numCurrentMale': roomInfo.numCurrentMale - 1,
+      };
+    } else if (user.gender == 'female') {
+      json = {
+        'numCurrentFemale': roomInfo.numCurrentFemale - 1,
+      };
+    } else {
+      json = {
+        'numCurrentFemale': roomInfo.numCurrentFemale - 1,
+      };
+    }
+
+    await ref.read(lobbyRepo).updateRoomInfo(roomID, json);
+
+    await ref.read(lobbyRepo).exitThisRoom(uid: uid, roomID: roomID);
+
+    final updatedRoomInfo = await _lobbyRepo.getRoomInfo(roomID);
+    if (updatedRoomInfo.numCurrentMale == 0 &&
+        updatedRoomInfo.numCurrentFemale == 0) {
+      await ref.read(lobbyRepo).deleteThisRoom(roomID: roomID);
+    }
+    ref.invalidateSelf();
     ref.invalidate(myLobbyProvider);
   }
 
