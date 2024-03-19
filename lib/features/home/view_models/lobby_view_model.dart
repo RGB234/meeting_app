@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_app/exceptions.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/home/models/room_model.dart';
 import 'package:meeting_app/features/home/models/users_rooms_model.dart';
@@ -12,12 +13,10 @@ import 'package:meeting_app/features/user_account/view_models/user_view_model.da
 
 class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
   late LobbyRepository _lobbyRepo;
-  late String uid;
 
   @override
   FutureOr<List<RoomModel>> build() async {
     _lobbyRepo = ref.read(lobbyRepo);
-    uid = ref.read(authRepo).user!.uid;
 
     List<QueryDocumentSnapshot<Map<String, dynamic>>> chatRoomList;
 
@@ -67,6 +66,7 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
     required String roomID,
     String authority = "guest",
   }) async {
+    final String uid = ref.read(authRepo).user!.uid;
     final exist = await _lobbyRepo.findUserInThisRoom(uid: uid, roomID: roomID);
     // -- user already exits in this room --
     if (exist) {
@@ -77,11 +77,6 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
     final DateTime now = DateTime.now();
     final String time = now.toString();
 
-    final updateInfo = UsersRoomsModel(
-        uid: uid, roomID: roomID, joinedAt: time, authority: authority);
-
-    await _lobbyRepo.enterThisRoom(updateInfo);
-
     // -- update count of Male/Female --
     final roomInfo = await _lobbyRepo.getRoomInfo(roomID);
 
@@ -91,10 +86,16 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
 
     Map<String, dynamic> json;
     if (user.gender == 'male') {
+      if (roomInfo.numCurrentMale == roomInfo.numMaxMale) {
+        throw CapacityLimitException('male');
+      }
       json = {
         'numCurrentMale': roomInfo.numCurrentMale + 1,
       };
     } else if (user.gender == 'female') {
+      if (roomInfo.numCurrentFemale == roomInfo.numMaxFemale) {
+        throw CapacityLimitException('female');
+      }
       json = {
         'numCurrentFemale': roomInfo.numCurrentFemale + 1,
       };
@@ -106,11 +107,17 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
 
     await ref.read(lobbyRepo).updateRoomInfo(roomID, json);
 
+    final updateInfo = UsersRoomsModel(
+        uid: uid, roomID: roomID, joinedAt: time, authority: authority);
+
+    await _lobbyRepo.enterThisRoom(updateInfo);
+
     ref.invalidateSelf();
     ref.invalidate(myLobbyProvider);
   }
 
   Future<void> exitThisRoom({required String roomID}) async {
+    final String uid = ref.read(authRepo).user!.uid;
     // -- update count of Male/Female --
     final roomInfo = await _lobbyRepo.getRoomInfo(roomID);
 

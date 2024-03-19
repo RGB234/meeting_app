@@ -45,8 +45,8 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     state = const AsyncValue.loading();
     UserProfileModel userProfile = UserProfileModel(
       uid: credential.user!.uid,
-      username: credential.user!.displayName ?? form["username"],
-      email: credential.user!.email ?? "None",
+      username: form["username"] ?? credential.user!.displayName,
+      email: form["email"] ?? credential.user!.email,
     );
     await _userRepo.createProfile(userProfile);
     state = AsyncValue.data(userProfile);
@@ -57,6 +57,18 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     await _userRepo.updateProfile(_authRepo.user!.uid, data);
     // refresh
     ref.invalidateSelf();
+  }
+
+  Future<UserProfileModel> fetchUserProfile({required String uid}) async {
+    late UserProfileModel userProfile;
+    final snapshot = await _userRepo.findUserById(uid);
+
+    if (snapshot.exists) {
+      userProfile = UserProfileModel.fromJson(snapshot.data()!);
+    } else {
+      userProfile = UserProfileModel.empty();
+    }
+    return userProfile;
   }
 }
 

@@ -108,7 +108,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return ref.watch(userProvider).when(
         loading: () =>
             const Center(child: CircularProgressIndicator.adaptive()),
-        error: (error, stackTrace) => Center(child: Text(error.toString())),
+        error: (error, stackTrace) {
+          debugPrint(stackTrace.toString());
+          return Scaffold(
+            appBar: AppBar(),
+            body: Center(child: Text(error.toString())),
+          );
+        },
         data: (data) {
           return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),

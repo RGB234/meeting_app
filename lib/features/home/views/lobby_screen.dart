@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_app/constants/gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
+import 'package:meeting_app/exceptions.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/chat/views/chat_screen.dart';
 import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
@@ -129,12 +130,21 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     );
   }
 
-  void _enterThisRoom({required String roomID}) {
-    ref.read(lobbyProvider.notifier).enterThisRoom(roomID: roomID);
-    context.pushNamed(
-      ChatScreen.routeName,
-      pathParameters: {'roomID': roomID},
-    );
+  Future<void> _enterThisRoom({required String roomID}) async {
+    try {
+      await ref.read(lobbyProvider.notifier).enterThisRoom(roomID: roomID);
+
+      if (context.mounted) {
+        context.pushNamed(
+          ChatScreen.routeName,
+          pathParameters: {'roomID': roomID},
+        );
+      }
+    } on CapacityLimitException catch (e) {
+      if (context.mounted) {
+        showErrorSnack(context, e.toString());
+      }
+    }
   }
 
   void _addChatRoom({required String title, required int numOfPairs}) {
@@ -159,12 +169,13 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 return ListView.separated(
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (!isSignedIn) {
                           showErrorSnack(context, "로그인이 필요한 서비스입니다.");
                           return;
                         }
-                        _enterThisRoom(roomID: data.elementAt(index).roomID);
+                        await _enterThisRoom(
+                            roomID: data.elementAt(index).roomID);
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,

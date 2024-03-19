@@ -53,9 +53,9 @@ class _ProfilePhotoState extends ConsumerState<ProfilePhoto> {
                   ? NetworkImage(
                       "${widget.photoURL}&date=${DateTime.now().toString()}")
                   : null,
-              child: Center(
-                child: Text(widget.username),
-              ),
+              // child: Center(
+              //   child: Text(widget.username),
+              // ),
             ),
     );
   }

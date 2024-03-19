@@ -18,7 +18,7 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
   bool _isObsecure = true;
   Map<String, String> formData = {};
 
-  void _onSubmitTap() {
+  Future<void> _onSubmitTap() async {
     if (_formkey.currentState != null) {
       if (_formkey.currentState!.validate()) {
         _formkey.currentState!.save();
@@ -28,7 +28,7 @@ class _EmailRegisterFormState extends ConsumerState<EmailRegisterForm> {
           "password": formData["password"],
         };
         // create account, sign in, and then go to initiallocation
-        ref.read(registerProvider.notifier).register(context);
+        await ref.read(registerProvider.notifier).register(context);
       }
     }
   }

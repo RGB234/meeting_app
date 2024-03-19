@@ -15,6 +15,9 @@ class UserRepository {
 
   Future<Map<String, dynamic>?> fetchProfile(String uid) async {
     final doc = await _db.collection("users").doc(uid).get();
+    if (!doc.exists) {
+      return {};
+    }
     return doc.data();
   }
 
