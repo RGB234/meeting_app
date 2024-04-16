@@ -25,7 +25,7 @@ class UserRepository {
     await _db.collection("users").doc(uid).update(data);
   }
 
-  Future<void> uploadPhoto({
+  Future<String> uploadPhoto({
     required String uid,
     required String fileName,
     required File file,
@@ -34,6 +34,7 @@ class UserRepository {
     await fileRef.putFile(file);
     final fileURL = await fileRef.getDownloadURL();
     await updateProfile(uid, {"photoURL": fileURL});
+    return fileURL;
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> findUserById(

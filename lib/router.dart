@@ -4,6 +4,7 @@ import 'package:meeting_app/features/authentication/repos/authentication_repo.da
 import 'package:meeting_app/features/authentication/views/signin/signin_screen.dart';
 import 'package:meeting_app/features/authentication/views/register/register_screen.dart';
 import 'package:meeting_app/features/chat/views/chat_screen.dart';
+import 'package:meeting_app/features/chat/views/voting_screen.dart';
 import 'package:meeting_app/features/home/views/home_screen.dart';
 import 'package:meeting_app/features/laboratory/test/riverpod_test_screen.dart';
 import 'package:meeting_app/features/laboratory/videos/video_screen.dart';
@@ -61,6 +62,11 @@ final routerProvider = Provider((ref) {
           final roomID = state.pathParameters['roomID']!;
           return ChatScreen(roomID: roomID);
         },
+      ),
+      GoRoute(
+        name: VotingScreen.routeName,
+        path: VotingScreen.routePath,
+        builder: (context, state) => const VotingScreen(),
       ),
       GoRoute(
         name: ProfileScreen.routeName,

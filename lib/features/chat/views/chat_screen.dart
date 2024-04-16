@@ -6,6 +6,7 @@ import 'package:meeting_app/constants/Gaps.dart';
 import 'package:meeting_app/constants/sizes.dart';
 import 'package:meeting_app/features/authentication/repos/authentication_repo.dart';
 import 'package:meeting_app/features/chat/view_models/message_view_model.dart';
+import 'package:meeting_app/features/chat/views/voting_screen.dart';
 import 'package:meeting_app/features/chat/views/widget/message.dart';
 import 'package:meeting_app/features/home/view_models/lobby_view_model.dart';
 import 'package:meeting_app/features/home/view_models/room_view_model.dart';
@@ -42,7 +43,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   void _exit({required String roomID}) {
     ref.read(lobbyProvider.notifier).exitThisRoom(roomID: roomID);
+    // Drawer Menu
     context.pop();
+    // Chat Screen
+    context.pop();
+  }
+
+  void _voting() {
+    context.pushNamed(VotingScreen.routeName);
   }
 
   @override
@@ -51,6 +59,35 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
+        endDrawer: Drawer(
+          width: MediaQuery.of(context).size.width * 0.6,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: Sizes.size16,
+              horizontal: Sizes.size12,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  leading: const Icon(FontAwesomeIcons.screwdriverWrench),
+                  title: const Text("채팅방 설정"),
+                  onTap: () => {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.how_to_vote),
+                  title: const Text("약속일정 정하기"),
+                  onTap: () => _voting(),
+                ),
+                ListTile(
+                  leading: const Icon(FontAwesomeIcons.rightFromBracket),
+                  title: const Text("퇴장하기"),
+                  onTap: () => _exit(roomID: widget.roomID),
+                ),
+              ],
+            ),
+          ),
+        ),
         appBar: AppBar(
           title: Text(
             ref.watch(roomProvider(widget.roomID)).when(
@@ -66,18 +103,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () => {},
-              tooltip: "채팅방 설정",
-              icon: const Icon(FontAwesomeIcons.screwdriverWrench),
-            ),
-            IconButton(
-              onPressed: () => _exit(roomID: widget.roomID),
-              tooltip: "채팅방 나가기",
-              icon: const Icon(FontAwesomeIcons.rightFromBracket),
-            ),
-          ],
         ),
         body: Stack(
           children: [

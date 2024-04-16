@@ -129,9 +129,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   child: Center(
                     child: Column(
                       children: [
+                        // ProfilePhoto 위젯 (View 에 해당)은 내부적으로 profilePhotoProvider 를 watch
+                        // 즉, UserProfileScreen 과 ProfilePhoto 가 watch 하는 provider 가 다르다.
+                        // 고로 userProvider 의 state 가 변경되어도 ProfilePhoto 는 re-rendering 되지 않고 반대도 마찬가지
+
+                        // 좀 더 자세히 살펴보면 ProfilePhoto 는 사실
                         ProfilePhoto(
-                          username: data.username,
-                          photoURL: data.photoURL,
+                          uid: data.uid,
                         ),
                         Gaps.v12,
                         const Text("사진을 클릭하면 변경할 수 있습니다"),

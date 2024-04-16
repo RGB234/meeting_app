@@ -23,6 +23,8 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     _authRepo = ref.read(authRepo);
     late final UserProfileModel userProfile;
 
+    debugPrint("user vm build");
+
     if (_authRepo.isSignedIn) {
       state = const AsyncValue.loading();
       final profile = await _userRepo.fetchProfile(_authRepo.user!.uid);
