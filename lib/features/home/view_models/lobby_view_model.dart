@@ -86,6 +86,7 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
 
     Map<String, dynamic> json;
     if (user.gender == 'male') {
+      // 유효성 검사
       if (roomInfo.numCurrentMale == roomInfo.numMaxMale) {
         throw CapacityLimitException('male');
       }
@@ -93,6 +94,7 @@ class LobbyViewModel extends AutoDisposeAsyncNotifier<List<RoomModel>> {
         'numCurrentMale': roomInfo.numCurrentMale + 1,
       };
     } else if (user.gender == 'female') {
+      // 유효성 검사
       if (roomInfo.numCurrentFemale == roomInfo.numMaxFemale) {
         throw CapacityLimitException('female');
       }

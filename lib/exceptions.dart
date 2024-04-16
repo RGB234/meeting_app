@@ -6,6 +6,6 @@ class CapacityLimitException implements Exception {
 
   @override
   String toString() {
-    return "No more seats for $gender";
+    return "Seats for $gender are full";
   }
 }

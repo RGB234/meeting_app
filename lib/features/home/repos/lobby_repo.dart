@@ -65,6 +65,7 @@ class LobbyRepository {
   // update user's joined rooms list & chat_room's joined_users list
   Future<void> enterThisRoom(UsersRoomsModel updateInfo) async {
     // -- new member --
+    // 유효성 검사는 lobby_view_model 에서 이미 수행.
     // update users_rooms table
     await _db.collection("users_rooms").doc().set(updateInfo.toJson());
   }
